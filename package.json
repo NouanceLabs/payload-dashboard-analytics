@@ -1,0 +1,39 @@
+{
+  "name": "@nouance/payload-dashboard-analytics",
+  "version": "0.1.0",
+  "homepage:": "https://nouance.io",
+  "repository": "git@github.com:NouanceLabs/payload-dashboard-analytics.git",
+  "description": "Dashboard analytics integration plugin for Payload CMS",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "payload",
+    "analytics",
+    "cms",
+    "plugin",
+    "typescript",
+    "plausible",
+    "dashboard",
+    "google analytics"
+  ],
+  "author": "dev@nouance.io",
+  "license": "MIT",
+  "peerDependencies": {
+    "payload": "^1.6.16",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react-router-dom": "^5.3.3",
+    "payload": "^1.6.26",
+    "typescript": "^4.5.5"
+  },
+  "files": [
+    "dist",
+    "types.js",
+    "types.d.ts"
+  ]
+}
