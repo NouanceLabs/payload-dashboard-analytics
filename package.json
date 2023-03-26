@@ -29,7 +29,7 @@
   "devDependencies": {
     "@types/react-router-dom": "^5.3.3",
     "payload": "^1.6.26",
-    "typescript": "^4.5.5"
+    "typescript": "^5.0.2"
   },
   "files": [
     "dist",
