@@ -15,6 +15,23 @@ export default buildConfig({
   serverURL: "http://localhost:3000",
   admin: {
     user: Users.slug,
+    // Used for development
+    webpack: (config) => {
+      const newConfig = {
+        ...config,
+        resolve: {
+          ...config.resolve,
+          alias: {
+            ...config.resolve.alias,
+            react: path.join(__dirname, "../node_modules/react"),
+            "react-dom": path.join(__dirname, "../node_modules/react-dom"),
+            payload: path.join(__dirname, "../node_modules/payload"),
+          },
+        },
+      };
+
+      return newConfig;
+    },
   },
   collections: [Categories, Posts, Tags, Users, Media],
   typescript: {
@@ -34,6 +51,31 @@ export default buildConfig({
       collections: [
         {
           slug: Posts.slug,
+          widgets: [
+            {
+              type: "chart",
+              metric: "pageViews",
+              timeframe: "7d",
+            },
+            {
+              type: "chart",
+              metric: "pageViews",
+              timeframe: "30d",
+            },
+            {
+              type: "chart",
+              metric: "uniqueVisitors",
+              timeframe: "month",
+            },
+            /* {
+              type: "info",
+              metric: "totalViews",
+            },
+            {
+              type: "info",
+              metric: "liveVisitors",
+            }, */
+          ],
         },
       ],
     }),

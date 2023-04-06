@@ -5,7 +5,7 @@ import { ApiProvider } from "../../providers";
 const getGlobalAggregateData = (provider: ApiProvider): Endpoint => {
   return {
     path: "/analytics/globalAggregateData",
-    method: "get",
+    method: "post",
     handler: handler(provider),
   };
 };

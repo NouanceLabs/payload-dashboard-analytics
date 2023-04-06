@@ -1,11 +1,47 @@
 import type { Config as PayloadConfig } from "payload/config";
-import type { DashboardAnalyticsConfig } from "./types";
+import type {
+  DashboardAnalyticsConfig,
+  ChartWidget,
+  InfoWidget,
+  InnerWidget,
+} from "./types";
+import type { Field } from "payload/dist/fields/config/types";
 import { extendWebpackConfig } from "./extendWebpackConfig";
 import getProvider from "./providers";
 import getGlobalAggregateData from "./routes/getGlobalAggregateData";
 import getGlobalChartData from "./routes/getGlobalChartData";
 import type { CollectionConfig } from "payload/dist/collections/config/types";
 import { getViewsChart } from "./components/Charts/ViewsChart";
+
+const InnerWidgetMap: Record<InnerWidget["type"], (config: any) => Field> = {
+  chart: (config: ChartWidget) => ({
+    type: "ui",
+    name: "dashboardAnalyticsViewsChart",
+    admin: {
+      position: "sidebar",
+      components: {
+        Field: (props: any) =>
+          getViewsChart(props, {
+            timeframe: config.timeframe,
+            metric: config.metric,
+          }),
+      },
+    },
+  }),
+  /* info: (config: InfoWidget) => ({
+    type: "ui",
+    name: "dashboardAnalyticsViewsChart",
+    admin: {
+      position: "sidebar",
+      components: {
+        Field: (props: any) =>
+          getViewsChart(props, {
+            metric: config.metric,
+          }),
+      },
+    },
+  }), */
+};
 
 const payloadDashboardAnalytics =
   (incomingConfig: DashboardAnalyticsConfig) =>
@@ -19,6 +55,9 @@ const payloadDashboardAnalytics =
       ...config,
       admin: {
         ...admin,
+        /* components: {
+          beforeDashboard: [() => getViewsChart()],
+        }, */
         webpack: extendWebpackConfig(config),
       },
       endpoints: [
@@ -38,16 +77,11 @@ const payloadDashboardAnalytics =
               ...collection,
               fields: [
                 ...collection.fields,
-                {
-                  type: "ui",
-                  name: "viewschart",
-                  admin: {
-                    position: "sidebar",
-                    components: {
-                      Field: (props) => getViewsChart(props),
-                    },
-                  },
-                },
+                ...targetCollection.widgets.map((widget) => {
+                  const field = InnerWidgetMap[widget.type];
+
+                  return field(widget);
+                }),
               ],
             };
 

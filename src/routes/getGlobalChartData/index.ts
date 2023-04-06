@@ -5,7 +5,7 @@ import { ApiProvider } from "../../providers";
 const getGlobalChartData = (provider: ApiProvider): Endpoint => {
   return {
     path: "/analytics/globalChartData",
-    method: "get",
+    method: "post",
     handler: handler(provider),
   };
 };

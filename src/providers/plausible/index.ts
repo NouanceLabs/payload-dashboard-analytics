@@ -1,12 +1,18 @@
 import { PlausibleProvider } from "../../types";
 import getGlobalAggregateData from "./getGlobalAggregateData";
 import getGlobalChartData from "./getGlobalChartData";
-import { ApiProvider } from "..";
+import type {
+  ApiProvider,
+  GlobalAggregateOptions,
+  GlobalChartOptions,
+} from "..";
 
 const plausible = (provider: PlausibleProvider): ApiProvider => {
   return {
-    getGlobalAggregateData: async () => await getGlobalAggregateData(provider),
-    getGlobalChartData: async () => await getGlobalChartData(provider),
+    getGlobalAggregateData: async (options?: GlobalAggregateOptions) =>
+      await getGlobalAggregateData(provider, options),
+    getGlobalChartData: async (options?: GlobalChartOptions) =>
+      await getGlobalChartData(provider, options),
     /* getGlobalChartData: () => {},
     getPageAggregateData: () => {},
     getPageChartData: () => {}, */
