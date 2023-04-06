@@ -31,6 +31,11 @@ export default buildConfig({
         siteId: PLAUSIBLE_SITE_ID,
         host: PLAUSIBLE_HOST,
       },
+      collections: [
+        {
+          slug: Posts.slug,
+        },
+      ],
     }),
   ],
 });

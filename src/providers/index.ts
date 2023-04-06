@@ -3,8 +3,8 @@ import type { Provider } from "../types";
 
 export type ApiProvider = {
   getGlobalAggregateData: () => Promise<any>;
-  /* getGlobalChartData: () => {},
-    getPageAggregateData: () => {},
+  getGlobalChartData: () => Promise<any>;
+  /* getPageAggregateData: () => {},
     getPageChartData: () => {}, */
 };
 

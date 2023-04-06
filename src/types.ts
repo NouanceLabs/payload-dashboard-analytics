@@ -14,8 +14,13 @@ interface GoogleProvider {
   propertyId: string;
 }
 
+interface Collection {
+  slug: string;
+}
+
 export type Provider = PlausibleProvider;
 
 export type DashboardAnalyticsConfig = {
   provider: Provider;
+  collections?: Collection[];
 };

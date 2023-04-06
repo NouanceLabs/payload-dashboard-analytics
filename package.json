@@ -29,11 +29,15 @@
   "devDependencies": {
     "@types/react-router-dom": "^5.3.3",
     "payload": "^1.6.26",
+    "react": "^18",
     "typescript": "^4.5.5"
   },
   "files": [
     "dist",
     "types.js",
     "types.d.ts"
-  ]
+  ],
+  "dependencies": {
+    "react-charts": "^3.0.0-beta.54"
+  }
 }

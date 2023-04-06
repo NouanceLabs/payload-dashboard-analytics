@@ -7,12 +7,7 @@ function client(provider: PlausibleProvider, endpoint?: string) {
   const url = new URL(`${host}/api/${apiVersion}${endpoint}`);
   url.searchParams.append("site_id", provider.siteId);
 
-  const plausibleMetrics = [
-    "visitors",
-    "pageviews",
-    "bounce_rate",
-    "visit_duration",
-  ];
+  const plausibleMetrics = ["visitors", "pageviews"];
 
   const baseUrl = String(url.href);
   url.searchParams.append("period", "30d");
