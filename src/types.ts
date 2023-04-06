@@ -1,10 +1,11 @@
 import { Payload } from "payload";
 import { Config as PayloadConfig } from "payload/config";
 
-interface PlausibleProvider {
+export interface PlausibleProvider {
   source: "plausible";
   apiSecret: string;
-  websiteId: string;
+  siteId: string;
+  host?: string;
 }
 
 interface GoogleProvider {
@@ -13,7 +14,7 @@ interface GoogleProvider {
   propertyId: string;
 }
 
-type Provider = PlausibleProvider | GoogleProvider;
+export type Provider = PlausibleProvider;
 
 export type DashboardAnalyticsConfig = {
   provider: Provider;

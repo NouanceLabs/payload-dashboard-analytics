@@ -7,6 +7,10 @@ import Users from "./collections/Users";
 import Media from "./collections/Media";
 import payloadDashboardAnalytics from "../../src/index";
 
+const PLAUSIBLE_API_KEY = process.env.PLAUSIBLE_API_KEY;
+const PLAUSIBLE_HOST = process.env.PLAUSIBLE_HOST;
+const PLAUSIBLE_SITE_ID = process.env.PLAUSIBLE_SITE_ID;
+
 export default buildConfig({
   serverURL: "http://localhost:3000",
   admin: {
@@ -23,8 +27,9 @@ export default buildConfig({
     payloadDashboardAnalytics({
       provider: {
         source: "plausible",
-        apiSecret: "placeholder",
-        websiteId: "payloadDemo",
+        apiSecret: PLAUSIBLE_API_KEY,
+        siteId: PLAUSIBLE_SITE_ID,
+        host: PLAUSIBLE_HOST,
       },
     }),
   ],
