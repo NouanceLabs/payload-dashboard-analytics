@@ -1,25 +1,11 @@
 import type { PlausibleProvider } from "../../types/providers";
 import type { AllAvailableMetrics } from "../../types/widgets";
+import { MetricMap } from "./utilities";
 
 type ClientOptions = {
   endpoint: string;
   timeframe?: string;
   metrics?: AllAvailableMetrics[];
-};
-
-export const MetricMap: Record<
-  AllAvailableMetrics,
-  { label: string; value: string }
-> = {
-  pageViews: {
-    label: "Page views",
-    value: "pageviews",
-  },
-  uniqueVisitors: { label: "Visitors", value: "visitors" },
-  bounceRate: { label: "Bounce rate", value: "visitors" },
-  averageDuration: { label: "Avg. duration", value: "visitors" },
-  totalViews: { label: "Total views", value: "visitors" },
-  totalVisitors: { label: "Total visitors", value: "visitors" },
 };
 
 function client(provider: PlausibleProvider, options: ClientOptions) {

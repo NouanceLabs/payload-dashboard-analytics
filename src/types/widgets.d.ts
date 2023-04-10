@@ -2,32 +2,31 @@ export type Timeframes = "12mo" | "6mo" | "30d" | "7d" | "currentMonth";
 
 export type IdMatcherFunction = (document: any) => string;
 
-export type ChartWidgetMetrics = "pageViews" | "uniqueVisitors";
+export type Metrics =
+  | "views"
+  | "visitors"
+  | "sessions"
+  | "bounceRate"
+  | "sessionDuration";
 
 export interface ChartWidget {
   type: "chart";
   label?: string;
-  metrics: ChartWidgetMetrics[];
-  timeframe: Timeframes;
+  metrics: Metrics[];
+  timeframe?: Timeframes;
 }
 
 export interface PageChartWidget extends ChartWidget {
   idMatcher: IdMatcherFunction;
 }
 
-export type InfoWidgetMetrics =
-  | "totalViews"
-  | "totalVisitors"
-  | "bounceRate"
-  | "averageDuration";
-
-export type AllAvailableMetrics = ChartWidgetMetrics | InfoWidgetMetrics;
+export type AllAvailableMetrics = Metrics;
 
 export interface InfoWidget {
   type: "info";
   label?: string;
-  metrics: InfoWidgetMetrics[];
-  timeframe: Timeframes;
+  metrics: Metrics[];
+  timeframe?: Timeframes;
 }
 
 export interface PageInfoWidget extends InfoWidget {

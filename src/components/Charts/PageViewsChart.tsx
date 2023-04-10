@@ -7,10 +7,10 @@ import React, {
   useMemo,
 } from "react";
 import type { ChartDataPoint, ChartData } from "../../types/data";
-import type { PageChartWidget } from "../../types/widgets";
+import type { PageChartWidget, Metrics } from "../../types/widgets";
 import type { AxisOptions } from "react-charts";
 import { useDocumentInfo } from "payload/components/utilities";
-import { MetricMap } from "../../providers/plausible/client";
+import { MetricMap } from "../../providers/plausible/utilities";
 import { useTheme } from "payload/dist/admin/components/utilities/Theme";
 
 type Props = {
@@ -67,17 +67,21 @@ const PageViewsChart: React.FC<Props> = ({ options }) => {
   }, [publishedDoc, pageId]);
 
   const chartLabel = useMemo(() => {
-    if (label) return label;
+    if (!!label) return label;
 
-    const metricValues: string[] = [];
+    if (metrics) {
+      const metricValues: string[] = [];
 
-    Object.entries(MetricMap).forEach(([key, value]) => {
-      /* @ts-ignore */
-      if (metrics.includes(key)) metricValues.push(value.label);
-    });
+      Object.entries(MetricMap).forEach(([key, value]) => {
+        // @ts-ignore
+        if (metrics.includes(key)) metricValues.push(value.label);
+      });
 
-    return metricValues.join(", ");
-  }, [options]);
+      return metricValues.join(", ");
+    } else {
+      return "No metrics defined for this widget";
+    }
+  }, [label, metrics]);
 
   const primaryAxis = React.useMemo<AxisOptions<ChartDataPoint>>(() => {
     return {

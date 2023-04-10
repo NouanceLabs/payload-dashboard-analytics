@@ -10,29 +10,16 @@ import type { ChartDataPoint, ChartData } from "../../types/data";
 import type { PageInfoWidget } from "../../types/widgets";
 import type { AxisOptions } from "react-charts";
 import { useDocumentInfo } from "payload/components/utilities";
-import { MetricMap } from "../../providers/plausible/client";
+import { MetricMap } from "../../providers/plausible/utilities";
 import { useTheme } from "payload/dist/admin/components/utilities/Theme";
-
-/* type ChartOptions = {
-  timeframe?: string;
-  metrics: ChartWidget["metrics"];
-  idMatcher: IdMatcherFunction;
-}; */
 
 type Props = {
   options: PageInfoWidget;
 };
 
-const ChartComponent = lazy(() =>
-  import("react-charts").then((module) => {
-    return { default: module.Chart };
-  })
-);
-
 const AggregateDataWidget: React.FC<Props> = ({ options }) => {
   const [chartData, setChartData] = useState<ChartData>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const chartRef = useRef<any>(null);
   const theme = useTheme();
   const { publishedDoc } = useDocumentInfo();
 
@@ -65,12 +52,6 @@ const AggregateDataWidget: React.FC<Props> = ({ options }) => {
       }).then((response) => response.json());
 
       getChartData.then((data: ChartData) => {
-        /* const processedData: ChartData = [
-          {
-            label: "test",
-            data: data,
-          },
-        ]; */
         setChartData(data);
         setIsLoading(false);
       });
