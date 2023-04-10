@@ -18,12 +18,6 @@ import { useDocumentInfo } from "payload/components/utilities";
 import { MetricMap } from "../../providers/plausible/client";
 import { useTheme } from "payload/dist/admin/components/utilities/Theme";
 
-/* type ChartOptions = {
-  timeframe?: string;
-  metrics: ChartWidget["metrics"];
-  idMatcher: IdMatcherFunction;
-}; */
-
 type Props = {
   options: ChartWidget;
 };
@@ -37,7 +31,6 @@ const ChartComponent = lazy(() =>
 const PageViewsChart: React.FC<Props> = ({ options }) => {
   const [chartData, setChartData] = useState<ChartData>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const chartRef = useRef<any>(null);
   const theme = useTheme();
   const { publishedDoc } = useDocumentInfo();
 
@@ -70,12 +63,6 @@ const PageViewsChart: React.FC<Props> = ({ options }) => {
       }).then((response) => response.json());
 
       getChartData.then((data: ChartData) => {
-        /* const processedData: ChartData = [
-          {
-            label: "test",
-            data: data,
-          },
-        ]; */
         setChartData(data);
         setIsLoading(false);
       });
@@ -83,16 +70,6 @@ const PageViewsChart: React.FC<Props> = ({ options }) => {
       setIsLoading(false);
     }
   }, [publishedDoc, pageId]);
-
-  useEffect(() => {
-    const importChart = async () => {
-      /* Dynamic import for react-charts due to ESM and how bundling is done with Payload */
-      const { Chart } = await import("react-charts");
-      chartRef.current = Chart;
-    };
-
-    importChart();
-  }, []);
 
   const chartLabel = useMemo(() => {
     if (label) return label;
@@ -134,10 +111,7 @@ const PageViewsChart: React.FC<Props> = ({ options }) => {
         marginBottom: "1.5rem",
       }}
     >
-      {pageId !== "" &&
-      chartRef?.current &&
-      chartData?.length &&
-      chartData.length > 0 ? (
+      {pageId !== "" && chartData?.length && chartData.length > 0 ? (
         <>
           <h1 style={{ fontSize: "1.25rem", marginBottom: "0.5rem" }}>
             {chartLabel} ({timeframeIndicator})
