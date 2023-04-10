@@ -9,27 +9,23 @@ import React, {
 import type {
   DashboardAnalyticsConfig,
   ChartDataPoint,
+  ChartData,
   ChartWidget,
-  IdMatcherFunction,
+  ChartWidgetMetrics,
 } from "../../types";
 import type { AxisOptions } from "react-charts";
 import { useDocumentInfo } from "payload/components/utilities";
 import { MetricMap } from "../../providers/plausible/client";
 import { useTheme } from "payload/dist/admin/components/utilities/Theme";
 
-type ChartData = {
-  label: string;
-  data: ChartDataPoint[];
-};
-
-type ChartOptions = {
+/* type ChartOptions = {
   timeframe?: string;
-  metric: ChartWidget["metric"];
+  metrics: ChartWidget["metrics"];
   idMatcher: IdMatcherFunction;
-};
+}; */
 
 type Props = {
-  options: ChartOptions;
+  options: ChartWidget;
 };
 
 const ChartComponent = lazy(() =>
@@ -38,14 +34,14 @@ const ChartComponent = lazy(() =>
   })
 );
 
-const ViewsChart: React.FC<Props> = ({ options }) => {
-  const [chartData, setChartData] = useState<ChartData[]>([]);
+const PageViewsChart: React.FC<Props> = ({ options }) => {
+  const [chartData, setChartData] = useState<ChartData>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const chartRef = useRef<any>(null);
   const theme = useTheme();
   const { publishedDoc } = useDocumentInfo();
 
-  const { timeframe, metric, idMatcher } = options;
+  const { timeframe, metrics, idMatcher, label } = options;
 
   const pageId = useMemo(() => {
     if (publishedDoc) return idMatcher(publishedDoc);
@@ -68,19 +64,19 @@ const ViewsChart: React.FC<Props> = ({ options }) => {
         },
         body: JSON.stringify({
           timeframe: timeframe,
-          metric: metric,
+          metrics: metrics,
           pageId: pageId,
         }),
       }).then((response) => response.json());
 
-      getChartData.then((data: ChartDataPoint[]) => {
-        const processedData: ChartData[] = [
+      getChartData.then((data: ChartData) => {
+        /* const processedData: ChartData = [
           {
-            label: MetricMap[metric].label,
+            label: "test",
             data: data,
           },
-        ];
-        setChartData(processedData);
+        ]; */
+        setChartData(data);
         setIsLoading(false);
       });
     } else {
@@ -97,6 +93,19 @@ const ViewsChart: React.FC<Props> = ({ options }) => {
 
     importChart();
   }, []);
+
+  const chartLabel = useMemo(() => {
+    if (label) return label;
+
+    const metricValues: string[] = [];
+
+    Object.entries(MetricMap).forEach(([key, value]) => {
+      /* @ts-ignore */
+      if (metrics.includes(key)) metricValues.push(value.label);
+    });
+
+    return metricValues.join(", ");
+  }, [options]);
 
   const primaryAxis = React.useMemo<AxisOptions<ChartDataPoint>>(() => {
     return {
@@ -131,7 +140,7 @@ const ViewsChart: React.FC<Props> = ({ options }) => {
       chartData.length > 0 ? (
         <>
           <h1 style={{ fontSize: "1.25rem", marginBottom: "0.5rem" }}>
-            {MetricMap[metric].label} ({timeframeIndicator})
+            {chartLabel} ({timeframeIndicator})
           </h1>
           <div style={{ minHeight: "200px", position: "relative" }}>
             <ChartComponent
@@ -139,7 +148,7 @@ const ViewsChart: React.FC<Props> = ({ options }) => {
                 data: chartData,
                 dark: theme.theme === "dark",
                 initialHeight: 220,
-                tooltip: false,
+                tooltip: options.metrics.length > 1,
                 /* @ts-ignore */
                 primaryAxis,
                 /* @ts-ignore */
@@ -151,18 +160,18 @@ const ViewsChart: React.FC<Props> = ({ options }) => {
       ) : isLoading ? (
         <> Loading...</>
       ) : (
-        <div>No {MetricMap[metric].label} data found.</div>
+        <div>No data found for {chartLabel}.</div>
       )}
     </section>
   );
 };
 
-export const getViewsChart = (props?: any, options?: ChartOptions) => {
+export const getPageViewsChart = (props?: any, options?: ChartWidget) => {
   const combinedProps: Props = {
     ...props,
     options,
   };
-  return <ViewsChart {...combinedProps} />;
+  return <PageViewsChart {...combinedProps} />;
 };
 
-export default { ViewsChart, getViewsChart };
+export default { PageViewsChart, getPageViewsChart };

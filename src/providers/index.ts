@@ -8,12 +8,12 @@ type BaseOptions = {
 
 export interface GlobalAggregateOptions extends BaseOptions {}
 export interface GlobalChartOptions extends BaseOptions {
-  metric: ChartWidget["metric"];
+  metrics: ChartWidget["metrics"];
 }
 
 export interface PageAggregateOptions extends BaseOptions {}
 export interface PageChartOptions extends BaseOptions {
-  metric: ChartWidget["metric"];
+  metrics: ChartWidget["metrics"];
   pageId: string;
 }
 

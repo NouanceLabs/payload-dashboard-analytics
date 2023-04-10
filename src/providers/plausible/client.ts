@@ -1,14 +1,14 @@
 import type { PlausibleProvider } from "../../types";
-import { InnerWidget } from "../../types";
+import { InnerWidget, ChartWidgetMetrics } from "../../types";
 
 type ClientOptions = {
   endpoint: string;
   timeframe?: string;
-  metric?: InnerWidget["metric"];
+  metrics?: InnerWidget["metrics"];
 };
 
 export const MetricMap: Record<
-  InnerWidget["metric"],
+  ChartWidgetMetrics,
   { label: string; value: string }
 > = {
   pageViews: {
@@ -19,7 +19,7 @@ export const MetricMap: Record<
 };
 
 function client(provider: PlausibleProvider, options: ClientOptions) {
-  const { endpoint, timeframe, metric } = options;
+  const { endpoint, timeframe, metrics } = options;
   const host = provider.host ?? `https://plausible.io`;
   const apiVersion = `v1`; // for future use
 
@@ -28,9 +28,22 @@ function client(provider: PlausibleProvider, options: ClientOptions) {
   const url = new URL(`${host}/api/${apiVersion}${endpoint}`);
   url.searchParams.append("site_id", provider.siteId);
 
-  const plausibleMetric = metric ? MetricMap[metric].value : "pageviews";
+  const getMetrics = () => {
+    const myMetrics: string[] = [];
+    const availableMetrics = Object.entries(MetricMap);
 
-  const plausibleMetrics = [plausibleMetric];
+    metrics?.forEach((metric) => {
+      const foundMetric = availableMetrics.find((mappedMetric) => {
+        return mappedMetric[0] === metric;
+      });
+
+      if (foundMetric) myMetrics.push(foundMetric[1].value);
+    });
+
+    return myMetrics;
+  };
+
+  const plausibleMetrics = metrics?.length ? getMetrics() : "pageviews";
 
   const baseUrl = String(url.href);
   url.searchParams.append("period", period);
@@ -39,7 +52,7 @@ function client(provider: PlausibleProvider, options: ClientOptions) {
   return {
     host: host,
     baseUrl: baseUrl,
-    metric: plausibleMetric,
+    metric: plausibleMetrics,
     url: url,
     fetch: async (customUrl?: string) => {
       const fetchUrl = customUrl ?? url.toString();

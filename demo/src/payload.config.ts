@@ -54,19 +54,19 @@ export default buildConfig({
           widgets: [
             {
               type: "chart",
-              metric: "pageViews",
-              timeframe: "7d",
-              idMatcher: (document: any) => `/articles/${document.slug}`,
-            },
-            {
-              type: "chart",
-              metric: "pageViews",
+              metrics: ["pageViews", "uniqueVisitors"],
               timeframe: "30d",
               idMatcher: (document: any) => `/articles/${document.slug}`,
             },
             {
               type: "chart",
-              metric: "uniqueVisitors",
+              metrics: ["pageViews"],
+              timeframe: "7d",
+              idMatcher: (document: any) => `/articles/${document.slug}`,
+            },
+            {
+              type: "chart",
+              metrics: ["uniqueVisitors"],
               timeframe: "month",
               idMatcher: (document: any) => `/articles/${document.slug}`,
             },

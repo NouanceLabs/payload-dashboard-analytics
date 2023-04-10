@@ -5,11 +5,11 @@ import payload from "payload";
 const handler = (provider: ApiProvider) => {
   const handler: Endpoint["handler"] = async (req, res, next) => {
     try {
-      const { timeframe, metric } = req.body;
+      const { timeframe, metrics } = req.body;
 
       const data = await provider.getGlobalChartData({
         timeframe: timeframe,
-        metric: metric,
+        metrics: metrics,
       });
       res.status(200).send(data);
     } catch (error) {

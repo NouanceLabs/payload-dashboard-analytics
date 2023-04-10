@@ -12,21 +12,19 @@ import getGlobalAggregateData from "./routes/getGlobalAggregateData";
 import getGlobalChartData from "./routes/getGlobalChartData";
 import getPageChartData from "./routes/getPageChartData";
 import type { CollectionConfig } from "payload/dist/collections/config/types";
-import { getViewsChart } from "./components/Charts/ViewsChart";
+import { getPageViewsChart } from "./components/Charts/PageViewsChart";
 
-const InnerWidgetMap: Record<InnerWidget["type"], (config: any) => Field> = {
-  chart: (config: ChartWidget) => ({
+const InnerWidgetMap: Record<
+  InnerWidget["type"],
+  (config: any, index: number) => Field
+> = {
+  chart: (config: ChartWidget, index: number) => ({
     type: "ui",
-    name: `chart_${config.metric}_${config.timeframe ?? "30d"}`,
+    name: `chart_${index}_${config.timeframe ?? "30d"}`,
     admin: {
       position: "sidebar",
       components: {
-        Field: (props: any) =>
-          getViewsChart(props, {
-            timeframe: config.timeframe,
-            metric: config.metric,
-            idMatcher: config.idMatcher,
-          }),
+        Field: (props: any) => getPageViewsChart(props, config),
       },
     },
   }),
@@ -80,10 +78,10 @@ const payloadDashboardAnalytics =
               ...collection,
               fields: [
                 ...collection.fields,
-                ...targetCollection.widgets.map((widget) => {
+                ...targetCollection.widgets.map((widget, index) => {
                   const field = InnerWidgetMap[widget.type];
 
-                  return field(widget);
+                  return field(widget, index);
                 }),
               ],
             };

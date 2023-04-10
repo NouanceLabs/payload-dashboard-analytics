@@ -1,4 +1,4 @@
-import type { PlausibleProvider, ChartDataPoint } from "../../types";
+import type { PlausibleProvider, ChartData } from "../../types";
 import type { GlobalChartOptions } from "..";
 import { MetricMap } from "./client";
 import payload from "payload";
@@ -6,12 +6,12 @@ import client from "./client";
 
 async function getGlobalChartData(
   provider: PlausibleProvider,
-  options?: GlobalChartOptions
+  options: GlobalChartOptions
 ) {
   const plausibleClient = client(provider, {
     endpoint: "/stats/timeseries",
     timeframe: options?.timeframe,
-    metric: options?.metric,
+    metrics: options?.metrics,
   });
 
   const { results } = await plausibleClient
@@ -23,14 +23,29 @@ async function getGlobalChartData(
       payload.logger.error(error);
     });
 
-  const processedData: ChartDataPoint[] = results.map((item: any) => {
-    return {
-      timestamp: item.date,
-      value: item[plausibleClient.metric],
-    };
+  /* @todo: fix types later */
+  /* @ts-ignore */
+  const dataSeries: ChartData = options.metrics.map((metric) => {
+    const mappedMetric = Object.entries(MetricMap).find(([key, value]) => {
+      return metric === key;
+    });
+
+    if (mappedMetric) {
+      const data = results.map((item: any) => {
+        return {
+          timestamp: item.date,
+          value: item[mappedMetric[1].value],
+        };
+      });
+
+      return {
+        label: mappedMetric[1].label,
+        data: data,
+      };
+    }
   });
 
-  return processedData;
+  return dataSeries;
 }
 
 export default getGlobalChartData;

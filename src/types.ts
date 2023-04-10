@@ -18,15 +18,19 @@ export type Timeframes = "12mo" | "6mo" | "30d" | "7d" | "month";
 
 export type IdMatcherFunction = (document: any) => string;
 
+export type ChartWidgetMetrics = "pageViews" | "uniqueVisitors";
+
 export type ChartWidget = {
   type: "chart";
-  metric: "pageViews" | "uniqueVisitors";
+  label?: string;
+  metrics: ChartWidgetMetrics[];
   timeframe: Timeframes;
   idMatcher: IdMatcherFunction;
 };
 
 export type InfoWidget = {
   type: "info";
+  label?: string;
   metric: "liveVisitors" | "totalViews";
 };
 
@@ -48,6 +52,13 @@ export interface ChartDataPoint {
   timestamp: Date;
   value: number;
 }
+
+export interface ChartDataSeries {
+  label: string;
+  data: ChartDataPoint[];
+}
+
+export type ChartData = ChartDataSeries[];
 
 export type Provider = PlausibleProvider;
 
