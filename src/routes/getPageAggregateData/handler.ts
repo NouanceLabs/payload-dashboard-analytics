@@ -9,7 +9,7 @@ const handler = (provider: ApiProvider) => {
 
       console.log("reached handler with", timeframe, metrics, pageId);
 
-      const data = await provider.getPageChartData({
+      const data = await provider.getPageAggregateData({
         timeframe: timeframe,
         metrics: metrics,
         pageId,

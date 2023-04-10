@@ -12,7 +12,7 @@ async function getGlobalChartData(
   const plausibleClient = client(provider, {
     endpoint: "/stats/timeseries",
     timeframe: options?.timeframe,
-    metrics: options?.metrics,
+    metrics: options.metrics,
   });
 
   const { results } = await plausibleClient

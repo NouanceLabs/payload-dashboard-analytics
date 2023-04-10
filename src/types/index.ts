@@ -13,13 +13,11 @@ export interface PageItemConfig {
   widgets: PageWidgets[];
 }
 
-export interface Collection extends ItemConfig {
+export interface Collection extends PageItemConfig {
   slug: string;
 }
 
-export interface Global extends ItemConfig {
-  idMatcher: IdMatcherFunction;
-}
+export interface Global extends PageItemConfig {}
 
 export type Provider = PlausibleProvider;
 

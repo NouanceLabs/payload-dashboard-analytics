@@ -27,7 +27,17 @@ function client(provider: PlausibleProvider, options: ClientOptions) {
   const host = provider.host ?? `https://plausible.io`;
   const apiVersion = `v1`; // for future use
 
-  const period = timeframe ?? "30d";
+  const period = () => {
+    switch (timeframe) {
+      case "currentMonth":
+        return "month";
+      case null:
+      case undefined:
+        return "30d";
+      default:
+        return timeframe;
+    }
+  };
 
   const url = new URL(`${host}/api/${apiVersion}${endpoint}`);
   url.searchParams.append("site_id", provider.siteId);
@@ -50,7 +60,7 @@ function client(provider: PlausibleProvider, options: ClientOptions) {
   const plausibleMetrics = metrics?.length ? getMetrics() : "pageviews";
 
   const baseUrl = String(url.href);
-  url.searchParams.append("period", period);
+  url.searchParams.append("period", period());
   url.searchParams.append("metrics", String(plausibleMetrics));
 
   return {
@@ -60,8 +70,6 @@ function client(provider: PlausibleProvider, options: ClientOptions) {
     url: url,
     fetch: async (customUrl?: string) => {
       const fetchUrl = customUrl ?? url.toString();
-
-      console.log("fetching data with ", fetchUrl);
 
       return await fetch(fetchUrl, {
         method: "get",

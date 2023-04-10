@@ -67,7 +67,7 @@ export default buildConfig({
             {
               type: "chart",
               metrics: ["uniqueVisitors"],
-              timeframe: "month",
+              timeframe: "currentMonth",
               idMatcher: (document: any) => `/articles/${document.slug}`,
             },
             /* {

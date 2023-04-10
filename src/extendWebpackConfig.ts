@@ -21,6 +21,8 @@ export const extendWebpackConfig =
             ? existingWebpackConfig.resolve.alias
             : {}),
           express: mockModulePath,
+          [path.resolve(__dirname, "./providers/plausible/client")]:
+            mockModulePath,
         },
       },
     };

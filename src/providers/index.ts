@@ -15,6 +15,7 @@ export interface GlobalChartOptions extends BaseOptions {
 
 export interface PageAggregateOptions extends BaseOptions {
   metrics: InfoWidget["metrics"];
+  pageId: string;
 }
 export interface PageChartOptions extends BaseOptions {
   metrics: ChartWidget["metrics"];
@@ -24,7 +25,7 @@ export interface PageChartOptions extends BaseOptions {
 export type ApiProvider = {
   getGlobalAggregateData: (options: GlobalAggregateOptions) => Promise<any>;
   getGlobalChartData: (options: GlobalChartOptions) => Promise<any>;
-  /* getPageAggregateData: (options?: PageAggregateOptions) => Promise<any>; */
+  getPageAggregateData: (options: PageAggregateOptions) => Promise<any>;
   getPageChartData: (options: PageChartOptions) => Promise<any>;
 };
 

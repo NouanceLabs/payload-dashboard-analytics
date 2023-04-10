@@ -4,11 +4,12 @@ import client from "./client";
 
 async function getGlobalAggregateData(
   provider: PlausibleProvider,
-  options?: GlobalAggregateOptions
+  options: GlobalAggregateOptions
 ) {
   const plausibleClient = client(provider, {
     endpoint: "/stats/aggregate",
-    timeframe: options?.timeframe,
+    timeframe: options.timeframe,
+    metrics: options.metrics,
   });
 
   const data = await plausibleClient.fetch().then((response) => {

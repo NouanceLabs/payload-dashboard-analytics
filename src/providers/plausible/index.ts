@@ -19,6 +19,8 @@ const plausible = (provider: PlausibleProvider): ApiProvider => {
       await getGlobalChartData(provider, options),
     getPageChartData: async (options: PageChartOptions) =>
       await getPageChartData(provider, options),
+    getPageAggregateData: async (options: PageAggregateOptions) =>
+      await getPageAggregateData(provider, options),
   };
 };
 
