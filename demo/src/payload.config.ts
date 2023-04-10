@@ -56,16 +56,19 @@ export default buildConfig({
               type: "chart",
               metric: "pageViews",
               timeframe: "7d",
+              idMatcher: (document: any) => `/articles/${document.slug}`,
             },
             {
               type: "chart",
               metric: "pageViews",
               timeframe: "30d",
+              idMatcher: (document: any) => `/articles/${document.slug}`,
             },
             {
               type: "chart",
               metric: "uniqueVisitors",
               timeframe: "month",
+              idMatcher: (document: any) => `/articles/${document.slug}`,
             },
             /* {
               type: "info",

@@ -16,10 +16,13 @@ interface GoogleProvider {
 
 export type Timeframes = "12mo" | "6mo" | "30d" | "7d" | "month";
 
+export type IdMatcherFunction = (document: any) => string;
+
 export type ChartWidget = {
   type: "chart";
   metric: "pageViews" | "uniqueVisitors";
   timeframe: Timeframes;
+  idMatcher: IdMatcherFunction;
 };
 
 export type InfoWidget = {
@@ -35,6 +38,10 @@ export interface ItemConfig {
 
 export interface Collection extends ItemConfig {
   slug: string;
+}
+
+export interface Global extends ItemConfig {
+  idMatcher: IdMatcherFunction;
 }
 
 export interface ChartDataPoint {

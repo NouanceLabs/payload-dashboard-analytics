@@ -10,13 +10,14 @@ import { extendWebpackConfig } from "./extendWebpackConfig";
 import getProvider from "./providers";
 import getGlobalAggregateData from "./routes/getGlobalAggregateData";
 import getGlobalChartData from "./routes/getGlobalChartData";
+import getPageChartData from "./routes/getPageChartData";
 import type { CollectionConfig } from "payload/dist/collections/config/types";
 import { getViewsChart } from "./components/Charts/ViewsChart";
 
 const InnerWidgetMap: Record<InnerWidget["type"], (config: any) => Field> = {
   chart: (config: ChartWidget) => ({
     type: "ui",
-    name: "dashboardAnalyticsViewsChart",
+    name: `chart_${config.metric}_${config.timeframe ?? "30d"}`,
     admin: {
       position: "sidebar",
       components: {
@@ -24,6 +25,7 @@ const InnerWidgetMap: Record<InnerWidget["type"], (config: any) => Field> = {
           getViewsChart(props, {
             timeframe: config.timeframe,
             metric: config.metric,
+            idMatcher: config.idMatcher,
           }),
       },
     },
@@ -64,6 +66,7 @@ const payloadDashboardAnalytics =
         ...endpoints,
         getGlobalAggregateData(apiProvider),
         getGlobalChartData(apiProvider),
+        getPageChartData(apiProvider),
       ],
       ...(collections && {
         collections: collections.map((collection) => {

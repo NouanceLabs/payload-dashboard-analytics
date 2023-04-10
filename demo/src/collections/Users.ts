@@ -1,10 +1,12 @@
-import { CollectionConfig } from 'payload/types';
+import { CollectionConfig } from "payload/types";
 
 const Users: CollectionConfig = {
-  slug: 'users',
-  auth: true,
+  slug: "users",
+  auth: {
+    tokenExpiration: 40000000,
+  },
   admin: {
-    useAsTitle: 'email',
+    useAsTitle: "email",
   },
   access: {
     read: () => true,
@@ -12,9 +14,9 @@ const Users: CollectionConfig = {
   fields: [
     // Email added by default
     {
-      name: 'name',
-      type: 'text',
-    }
+      name: "name",
+      type: "text",
+    },
   ],
 };
 

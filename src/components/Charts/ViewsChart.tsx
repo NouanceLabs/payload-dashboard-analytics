@@ -1,10 +1,19 @@
-import React, { useEffect, useState, lazy, useReducer, useRef } from "react";
+import React, {
+  useEffect,
+  useState,
+  lazy,
+  useReducer,
+  useRef,
+  useMemo,
+} from "react";
 import type {
   DashboardAnalyticsConfig,
   ChartDataPoint,
   ChartWidget,
+  IdMatcherFunction,
 } from "../../types";
 import type { AxisOptions } from "react-charts";
+import { useDocumentInfo } from "payload/components/utilities";
 import { MetricMap } from "../../providers/plausible/client";
 import { useTheme } from "payload/dist/admin/components/utilities/Theme";
 
@@ -16,6 +25,7 @@ type ChartData = {
 type ChartOptions = {
   timeframe?: string;
   metric: ChartWidget["metric"];
+  idMatcher: IdMatcherFunction;
 };
 
 type Props = {
@@ -30,10 +40,17 @@ const ChartComponent = lazy(() =>
 
 const ViewsChart: React.FC<Props> = ({ options }) => {
   const [chartData, setChartData] = useState<ChartData[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const chartRef = useRef<any>(null);
   const theme = useTheme();
+  const { publishedDoc } = useDocumentInfo();
 
-  const { timeframe, metric } = options;
+  const { timeframe, metric, idMatcher } = options;
+
+  const pageId = useMemo(() => {
+    if (publishedDoc) return idMatcher(publishedDoc);
+    else return "";
+  }, [publishedDoc]);
 
   const timeframeIndicator =
     timeframe === "month"
@@ -41,27 +58,39 @@ const ViewsChart: React.FC<Props> = ({ options }) => {
       : timeframe ?? "30d";
 
   useEffect(() => {
-    const getChartData = fetch(`/api/analytics/globalChartData`, {
-      method: "post",
-      credentials: "include",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ timeframe: timeframe, metric: metric }),
-    }).then((response) => response.json());
-
-    getChartData.then((data: ChartDataPoint[]) => {
-      const processedData: ChartData[] = [
-        {
-          label: "Visitors",
-          data: data,
+    if (pageId) {
+      const getChartData = fetch(`/api/analytics/pageChartData`, {
+        method: "post",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
-      ];
-      setChartData(processedData);
-    });
+        body: JSON.stringify({
+          timeframe: timeframe,
+          metric: metric,
+          pageId: pageId,
+        }),
+      }).then((response) => response.json());
 
+      getChartData.then((data: ChartDataPoint[]) => {
+        const processedData: ChartData[] = [
+          {
+            label: MetricMap[metric].label,
+            data: data,
+          },
+        ];
+        setChartData(processedData);
+        setIsLoading(false);
+      });
+    } else {
+      setIsLoading(false);
+    }
+  }, [publishedDoc, pageId]);
+
+  useEffect(() => {
     const importChart = async () => {
+      /* Dynamic import for react-charts due to ESM and how bundling is done with Payload */
       const { Chart } = await import("react-charts");
       chartRef.current = Chart;
     };
@@ -96,7 +125,10 @@ const ViewsChart: React.FC<Props> = ({ options }) => {
         marginBottom: "1.5rem",
       }}
     >
-      {chartRef?.current && chartData?.length && chartData.length > 0 ? (
+      {pageId !== "" &&
+      chartRef?.current &&
+      chartData?.length &&
+      chartData.length > 0 ? (
         <>
           <h1 style={{ fontSize: "1.25rem", marginBottom: "0.5rem" }}>
             {MetricMap[metric].label} ({timeframeIndicator})
@@ -116,8 +148,10 @@ const ViewsChart: React.FC<Props> = ({ options }) => {
             />
           </div>
         </>
+      ) : isLoading ? (
+        <> Loading...</>
       ) : (
-        <></>
+        <div>No {MetricMap[metric].label} data found.</div>
       )}
     </section>
   );

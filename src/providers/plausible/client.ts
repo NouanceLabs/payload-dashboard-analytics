@@ -41,14 +41,19 @@ function client(provider: PlausibleProvider, options: ClientOptions) {
     baseUrl: baseUrl,
     metric: plausibleMetric,
     url: url,
-    fetch: async () =>
-      await fetch(url, {
+    fetch: async (customUrl?: string) => {
+      const fetchUrl = customUrl ?? url.toString();
+
+      console.log("fetching data with ", fetchUrl);
+
+      return await fetch(fetchUrl, {
         method: "get",
         headers: new Headers({
           Authorization: `Bearer ${provider.apiSecret}`,
           "Content-Type": "application/x-www-form-urlencoded",
         }),
-      }),
+      });
+    },
   };
 }
 
