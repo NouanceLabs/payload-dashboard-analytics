@@ -1,4 +1,4 @@
-import { PlausibleProvider } from "../../types";
+import type { PlausibleProvider } from "../../types/providers";
 import getGlobalAggregateData from "./getGlobalAggregateData";
 import getGlobalChartData from "./getGlobalChartData";
 import getPageAggregateData from "./getPageAggregateData";

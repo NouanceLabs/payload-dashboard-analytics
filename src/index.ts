@@ -1,10 +1,10 @@
 import type { Config as PayloadConfig } from "payload/config";
+import type { DashboardAnalyticsConfig } from "./types";
 import type {
-  DashboardAnalyticsConfig,
-  ChartWidget,
-  InfoWidget,
-  InnerWidget,
-} from "./types";
+  PageInfoWidget,
+  PageChartWidget,
+  PageWidgets,
+} from "./types/widgets";
 import type { Field } from "payload/dist/fields/config/types";
 import { extendWebpackConfig } from "./extendWebpackConfig";
 import getProvider from "./providers";
@@ -13,12 +13,13 @@ import getGlobalChartData from "./routes/getGlobalChartData";
 import getPageChartData from "./routes/getPageChartData";
 import type { CollectionConfig } from "payload/dist/collections/config/types";
 import { getPageViewsChart } from "./components/Charts/PageViewsChart";
+import { getAggregateDataWidget } from "./components/Charts/AggregateDataWidget";
 
-const InnerWidgetMap: Record<
-  InnerWidget["type"],
+const PageWidgetMap: Record<
+  PageWidgets["type"],
   (config: any, index: number) => Field
 > = {
-  chart: (config: ChartWidget, index: number) => ({
+  chart: (config: PageChartWidget, index: number) => ({
     type: "ui",
     name: `chart_${index}_${config.timeframe ?? "30d"}`,
     admin: {
@@ -28,19 +29,16 @@ const InnerWidgetMap: Record<
       },
     },
   }),
-  /* info: (config: InfoWidget) => ({
+  info: (config: PageInfoWidget) => ({
     type: "ui",
     name: "dashboardAnalyticsViewsChart",
     admin: {
       position: "sidebar",
       components: {
-        Field: (props: any) =>
-          getViewsChart(props, {
-            metric: config.metric,
-          }),
+        Field: (props: any) => getAggregateDataWidget(props, config),
       },
     },
-  }), */
+  }),
 };
 
 const payloadDashboardAnalytics =
@@ -79,7 +77,7 @@ const payloadDashboardAnalytics =
               fields: [
                 ...collection.fields,
                 ...targetCollection.widgets.map((widget, index) => {
-                  const field = InnerWidgetMap[widget.type];
+                  const field = PageWidgetMap[widget.type];
 
                   return field(widget, index);
                 }),

@@ -1,17 +1,21 @@
 import plausible from "./plausible";
 import type { Provider } from "../types";
-import { ChartWidget } from "../types";
+import { ChartWidget, InfoWidget } from "../types/widgets";
 
 type BaseOptions = {
   timeframe?: string;
 };
 
-export interface GlobalAggregateOptions extends BaseOptions {}
+export interface GlobalAggregateOptions extends BaseOptions {
+  metrics: InfoWidget["metrics"];
+}
 export interface GlobalChartOptions extends BaseOptions {
   metrics: ChartWidget["metrics"];
 }
 
-export interface PageAggregateOptions extends BaseOptions {}
+export interface PageAggregateOptions extends BaseOptions {
+  metrics: InfoWidget["metrics"];
+}
 export interface PageChartOptions extends BaseOptions {
   metrics: ChartWidget["metrics"];
   pageId: string;

@@ -1,4 +1,4 @@
-import type { PlausibleProvider } from "../../types";
+import type { PlausibleProvider } from "../../types/providers";
 import type { GlobalAggregateOptions } from "..";
 import client from "./client";
 

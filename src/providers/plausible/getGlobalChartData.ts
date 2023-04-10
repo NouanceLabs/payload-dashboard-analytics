@@ -1,4 +1,5 @@
-import type { PlausibleProvider, ChartData } from "../../types";
+import type { PlausibleProvider } from "../../types/providers";
+import type { ChartData } from "../../types/data";
 import type { GlobalChartOptions } from "..";
 import { MetricMap } from "./client";
 import payload from "payload";

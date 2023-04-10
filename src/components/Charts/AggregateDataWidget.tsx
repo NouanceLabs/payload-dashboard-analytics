@@ -7,14 +7,20 @@ import React, {
   useMemo,
 } from "react";
 import type { ChartDataPoint, ChartData } from "../../types/data";
-import type { PageChartWidget } from "../../types/widgets";
+import type { PageInfoWidget } from "../../types/widgets";
 import type { AxisOptions } from "react-charts";
 import { useDocumentInfo } from "payload/components/utilities";
 import { MetricMap } from "../../providers/plausible/client";
 import { useTheme } from "payload/dist/admin/components/utilities/Theme";
 
+/* type ChartOptions = {
+  timeframe?: string;
+  metrics: ChartWidget["metrics"];
+  idMatcher: IdMatcherFunction;
+}; */
+
 type Props = {
-  options: PageChartWidget;
+  options: PageInfoWidget;
 };
 
 const ChartComponent = lazy(() =>
@@ -23,9 +29,10 @@ const ChartComponent = lazy(() =>
   })
 );
 
-const PageViewsChart: React.FC<Props> = ({ options }) => {
+const AggregateDataWidget: React.FC<Props> = ({ options }) => {
   const [chartData, setChartData] = useState<ChartData>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const chartRef = useRef<any>(null);
   const theme = useTheme();
   const { publishedDoc } = useDocumentInfo();
 
@@ -58,6 +65,12 @@ const PageViewsChart: React.FC<Props> = ({ options }) => {
       }).then((response) => response.json());
 
       getChartData.then((data: ChartData) => {
+        /* const processedData: ChartData = [
+          {
+            label: "test",
+            data: data,
+          },
+        ]; */
         setChartData(data);
         setIsLoading(false);
       });
@@ -79,68 +92,26 @@ const PageViewsChart: React.FC<Props> = ({ options }) => {
     return metricValues.join(", ");
   }, [options]);
 
-  const primaryAxis = React.useMemo<AxisOptions<ChartDataPoint>>(() => {
-    return {
-      getValue: (datum) => datum.timestamp,
-      show: false,
-      elementType: "line",
-      showDatumElements: false,
-    };
-  }, []);
-
-  const secondaryAxes = React.useMemo<AxisOptions<ChartDataPoint>[]>(
-    () => [
-      {
-        getValue: (datum) => {
-          return datum.value;
-        },
-        elementType: "line",
-      },
-    ],
-    []
-  );
-
   return (
     <section
       style={{
         marginBottom: "1.5rem",
       }}
     >
-      {pageId !== "" && chartData?.length && chartData.length > 0 ? (
-        <>
-          <h1 style={{ fontSize: "1.25rem", marginBottom: "0.5rem" }}>
-            {chartLabel} ({timeframeIndicator})
-          </h1>
-          <div style={{ minHeight: "200px", position: "relative" }}>
-            <ChartComponent
-              options={{
-                data: chartData,
-                dark: theme.theme === "dark",
-                initialHeight: 220,
-                tooltip: options.metrics.length > 1,
-                /* @ts-ignore */
-                primaryAxis,
-                /* @ts-ignore */
-                secondaryAxes,
-              }}
-            />
-          </div>
-        </>
-      ) : isLoading ? (
-        <> Loading...</>
-      ) : (
-        <div>No data found for {chartLabel}.</div>
-      )}
+      aggr data
     </section>
   );
 };
 
-export const getPageViewsChart = (props?: any, options?: PageChartWidget) => {
+export const getAggregateDataWidget = (
+  props?: any,
+  options?: PageInfoWidget
+) => {
   const combinedProps: Props = {
     ...props,
     options,
   };
-  return <PageViewsChart {...combinedProps} />;
+  return <AggregateDataWidget {...combinedProps} />;
 };
 
-export default { PageViewsChart, getPageViewsChart };
+export default { AggregateDataWidget, getAggregateDataWidget };
