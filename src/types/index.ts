@@ -2,7 +2,7 @@ import type { PlausibleProvider } from "./providers";
 import type {
   DashboardWidgets,
   PageWidgets,
-  IdMatcherFunction,
+  NavigationWidgets,
 } from "./widgets";
 
 export interface ItemConfig {
@@ -24,4 +24,8 @@ export type Provider = PlausibleProvider;
 export type DashboardAnalyticsConfig = {
   provider: Provider;
   collections?: Collection[];
+  navigation?: {
+    BeforeNavLinks?: NavigationWidgets[];
+    AfterNavLinks?: NavigationWidgets[];
+  };
 };

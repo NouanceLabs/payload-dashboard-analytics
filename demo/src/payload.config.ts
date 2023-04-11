@@ -51,6 +51,18 @@ export default buildConfig({
   plugins: [
     payloadDashboardAnalytics({
       provider: plausibleProvider,
+      navigation: {
+        BeforeNavLinks: [
+          {
+            type: "live",
+          },
+        ],
+        AfterNavLinks: [
+          {
+            type: "live",
+          },
+        ],
+      },
       collections: [
         {
           slug: Posts.slug,
@@ -62,28 +74,11 @@ export default buildConfig({
               timeframe: "30d",
               idMatcher: (document: any) => `/articles/${document.slug}`,
             },
-            /* {
-              type: "chart",
-              metrics: ["sessions"],
-              timeframe: "7d",
-              idMatcher: (document: any) => `/articles/${document.slug}`,
-            },
             {
-              type: "chart",
-              metrics: ["sessionDuration"],
+              type: "info",
+              label: "Page data",
+              metrics: ["views", "sessions", "sessionDuration"],
               timeframe: "currentMonth",
-              idMatcher: (document: any) => `/articles/${document.slug}`,
-            }, */
-            {
-              type: "info",
-              metrics: ["views"],
-              idMatcher: (document: any) => `/articles/${document.slug}`,
-              label: "hidden",
-            },
-            {
-              type: "info",
-              metrics: ["sessions", "sessionDuration"],
-              timeframe: "6mo",
               idMatcher: (document: any) => `/articles/${document.slug}`,
             },
           ],

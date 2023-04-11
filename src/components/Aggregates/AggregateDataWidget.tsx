@@ -78,7 +78,7 @@ const AggregateDataWidget: React.FC<Props> = ({ options }) => {
         marginBottom: "1.5rem",
         border: "1px solid",
         borderColor: "var(--theme-elevation-100)",
-        padding: "0.5rem",
+        padding: "1rem",
       }}
     >
       {label !== "hidden" && (

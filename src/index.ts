@@ -18,6 +18,7 @@ import getLiveData from "./routes/getLiveData";
 import type { CollectionConfig } from "payload/dist/collections/config/types";
 import { getPageViewsChart } from "./components/Charts/PageViewsChart";
 import { getAggregateDataWidget } from "./components/Aggregates/AggregateDataWidget";
+import LiveDataWidget from "./components/Live/LiveDataWidget";
 
 const PageWidgetMap: Record<
   PageWidgets["type"],
@@ -49,7 +50,7 @@ const payloadDashboardAnalytics =
   (incomingConfig: DashboardAnalyticsConfig) =>
   (config: PayloadConfig): PayloadConfig => {
     const { admin, collections } = config;
-    const { provider } = incomingConfig;
+    const { provider, navigation } = incomingConfig;
     const endpoints = config.endpoints ?? [];
     const apiProvider = getProvider(provider);
 
@@ -57,9 +58,21 @@ const payloadDashboardAnalytics =
       ...config,
       admin: {
         ...admin,
-        /* components: {
-          beforeDashboard: [() => getViewsChart()],
-        }, */
+        components: {
+          ...admin?.components,
+          ...(navigation?.BeforeNavLinks && {
+            beforeNavLinks: [
+              ...(admin?.components?.beforeNavLinks ?? []),
+              LiveDataWidget.LiveDataWidget,
+            ],
+          }),
+          ...(navigation?.AfterNavLinks && {
+            afterNavLinks: [
+              ...(admin?.components?.afterNavLinks ?? []),
+              LiveDataWidget.LiveDataWidget,
+            ],
+          }),
+        },
         webpack: extendWebpackConfig(config),
       },
       endpoints: [

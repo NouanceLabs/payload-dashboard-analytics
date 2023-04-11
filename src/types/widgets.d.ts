@@ -29,10 +29,17 @@ export interface InfoWidget {
   timeframe?: Timeframes;
 }
 
+export interface LiveWidget {
+  type: "live";
+  //label?: string | "hidden";
+}
+
 export interface PageInfoWidget extends InfoWidget {
   idMatcher: IdMatcherFunction;
 }
 
 export type DashboardWidgets = ChartWidget | InfoWidget;
+
+export type NavigationWidgets = LiveWidget;
 
 export type PageWidgets = PageChartWidget | PageInfoWidget;
