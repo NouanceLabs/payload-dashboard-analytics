@@ -17,6 +17,10 @@ export type AggregateData = Array<{
   value: string | number;
 }>;
 
+export type LiveData = {
+  visitors: number;
+};
+
 export type MetricsMap = Record<
   AllAvailableMetrics,
   { label: string; value: string }

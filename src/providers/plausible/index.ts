@@ -3,12 +3,14 @@ import getGlobalAggregateData from "./getGlobalAggregateData";
 import getGlobalChartData from "./getGlobalChartData";
 import getPageAggregateData from "./getPageAggregateData";
 import getPageChartData from "./getPageChartData";
+import getLiveData from "./getLiveData";
 import type {
   ApiProvider,
   GlobalAggregateOptions,
   GlobalChartOptions,
   PageChartOptions,
   PageAggregateOptions,
+  LiveDataOptions,
 } from "..";
 
 const plausible = (provider: PlausibleProvider): ApiProvider => {
@@ -21,6 +23,8 @@ const plausible = (provider: PlausibleProvider): ApiProvider => {
       await getPageChartData(provider, options),
     getPageAggregateData: async (options: PageAggregateOptions) =>
       await getPageAggregateData(provider, options),
+    getLiveData: async (options: LiveDataOptions) =>
+      await getLiveData(provider, options),
   };
 };
 

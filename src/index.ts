@@ -8,10 +8,13 @@ import type {
 import type { Field } from "payload/dist/fields/config/types";
 import { extendWebpackConfig } from "./extendWebpackConfig";
 import getProvider from "./providers";
+
 import getGlobalAggregateData from "./routes/getGlobalAggregateData";
 import getGlobalChartData from "./routes/getGlobalChartData";
 import getPageChartData from "./routes/getPageChartData";
 import getPageAggregateData from "./routes/getPageAggregateData";
+import getLiveData from "./routes/getLiveData";
+
 import type { CollectionConfig } from "payload/dist/collections/config/types";
 import { getPageViewsChart } from "./components/Charts/PageViewsChart";
 import { getAggregateDataWidget } from "./components/Aggregates/AggregateDataWidget";
@@ -65,6 +68,7 @@ const payloadDashboardAnalytics =
         getGlobalChartData(apiProvider),
         getPageChartData(apiProvider),
         getPageAggregateData(apiProvider),
+        getLiveData(apiProvider),
       ],
       ...(collections && {
         collections: collections.map((collection) => {

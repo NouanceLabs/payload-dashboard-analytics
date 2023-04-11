@@ -17,7 +17,7 @@ const handler = (provider: ApiProvider) => {
       res.status(200).send(data);
     } catch (error) {
       payload.logger.error(error);
-      res.status(500);
+      res.sendStatus(500);
     }
   };
 
