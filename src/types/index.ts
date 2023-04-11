@@ -28,7 +28,12 @@ export type DashboardAnalyticsConfig = {
   collections?: Collection[];
   globals?: Global[];
   navigation?: {
-    BeforeNavLinks?: NavigationWidgets[];
-    AfterNavLinks?: NavigationWidgets[];
+    beforeNavLinks?: NavigationWidgets[];
+    afterNavLinks?: NavigationWidgets[];
+  };
+  dashboard?: {
+    beforeDashboard?: DashboardWidgets[];
+    dashboard?: DashboardWidgets[];
+    afterDashboard?: DashboardWidgets[];
   };
 };

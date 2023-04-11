@@ -9,18 +9,21 @@ export type Metrics =
   | "bounceRate"
   | "sessionDuration";
 
+export type AllAvailableMetrics = Metrics;
+
+/* Keeping this for later */
+/* export type Reports = "topSources" | "topPages" | "topCountries"; */
+
 export interface ChartWidget {
   type: "chart";
-  label?: string | "hidden";
   metrics: Metrics[];
   timeframe?: Timeframes;
+  label?: string | "hidden";
 }
 
 export interface PageChartWidget extends ChartWidget {
   idMatcher: IdMatcherFunction;
 }
-
-export type AllAvailableMetrics = Metrics;
 
 export interface InfoWidget {
   type: "info";
@@ -31,14 +34,21 @@ export interface InfoWidget {
 
 export interface LiveWidget {
   type: "live";
-  //label?: string | "hidden";
+}
+
+export interface ReportWidget {
+  type: "report";
+  report: Reports;
+  timeframe?: Timeframes;
 }
 
 export interface PageInfoWidget extends InfoWidget {
   idMatcher: IdMatcherFunction;
 }
 
-export type DashboardWidgets = ChartWidget | InfoWidget;
+/* export type DashboardWidgets = ChartWidget | InfoWidget | ReportWidget; */
+
+export type DashboardWidgets = "topPages" | "viewsChart";
 
 export type NavigationWidgets = LiveWidget;
 

@@ -54,16 +54,14 @@ export default buildConfig({
     payloadDashboardAnalytics({
       provider: plausibleProvider,
       navigation: {
-        BeforeNavLinks: [
+        afterNavLinks: [
           {
             type: "live",
           },
         ],
-        AfterNavLinks: [
-          {
-            type: "live",
-          },
-        ],
+      },
+      dashboard: {
+        beforeDashboard: ["topPages", "viewsChart"],
       },
       globals: [
         {

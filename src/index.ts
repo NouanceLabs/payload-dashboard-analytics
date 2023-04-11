@@ -4,6 +4,8 @@ import type {
   PageInfoWidget,
   PageChartWidget,
   PageWidgets,
+  NavigationWidgets,
+  DashboardWidgets,
 } from "./types/widgets";
 import type { Field } from "payload/dist/fields/config/types";
 import { extendWebpackConfig } from "./extendWebpackConfig";
@@ -19,7 +21,7 @@ import type { CollectionConfig } from "payload/dist/collections/config/types";
 import type { GlobalConfig } from "payload/dist/globals/config/types";
 import { getPageViewsChart } from "./components/Charts/PageViewsChart";
 import { getAggregateDataWidget } from "./components/Aggregates/AggregateDataWidget";
-import LiveDataWidget from "./components/Live/LiveDataWidget";
+import LiveDataComponent from "./components/Live/LiveDataWidget";
 
 const PageWidgetMap: Record<
   PageWidgets["type"],
@@ -47,6 +49,10 @@ const PageWidgetMap: Record<
   }),
 };
 
+const NavigationWidgetMap: Record<NavigationWidgets["type"], React.FC> = {
+  live: LiveDataComponent.LiveDataWidget,
+};
+
 const payloadDashboardAnalytics =
   (incomingConfig: DashboardAnalyticsConfig) =>
   (config: PayloadConfig): PayloadConfig => {
@@ -61,16 +67,20 @@ const payloadDashboardAnalytics =
         ...admin,
         components: {
           ...admin?.components,
-          ...(navigation?.BeforeNavLinks && {
+          ...(navigation?.beforeNavLinks && {
             beforeNavLinks: [
               ...(admin?.components?.beforeNavLinks ?? []),
-              LiveDataWidget.LiveDataWidget,
+              ...navigation.beforeNavLinks.map(
+                (widget) => NavigationWidgetMap[widget.type]
+              ),
             ],
           }),
-          ...(navigation?.AfterNavLinks && {
+          ...(navigation?.afterNavLinks && {
             afterNavLinks: [
               ...(admin?.components?.afterNavLinks ?? []),
-              LiveDataWidget.LiveDataWidget,
+              ...navigation.afterNavLinks.map(
+                (widget) => NavigationWidgetMap[widget.type]
+              ),
             ],
           }),
         },
