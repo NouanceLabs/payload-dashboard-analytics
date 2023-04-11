@@ -5,6 +5,7 @@ import Posts from "./collections/Posts";
 import Tags from "./collections/Tags";
 import Users from "./collections/Users";
 import Media from "./collections/Media";
+import Homepage from "./globals/Homepage";
 import payloadDashboardAnalytics from "../../src/index";
 import { PlausibleProvider } from "../../src/types/providers";
 
@@ -42,6 +43,7 @@ export default buildConfig({
     },
   },
   collections: [Categories, Posts, Tags, Users, Media],
+  globals: [Homepage],
   typescript: {
     outputFile: path.resolve(__dirname, "payload-types.ts"),
   },
@@ -63,6 +65,27 @@ export default buildConfig({
           },
         ],
       },
+      globals: [
+        {
+          slug: "homepage",
+          widgets: [
+            {
+              type: "chart",
+              label: "Views and visitors",
+              metrics: ["views", "visitors", "sessions"],
+              timeframe: "30d",
+              idMatcher: () => `/`,
+            },
+            {
+              type: "info",
+              label: "Page data",
+              metrics: ["views", "sessions", "sessionDuration"],
+              timeframe: "currentMonth",
+              idMatcher: () => `/`,
+            },
+          ],
+        },
+      ],
       collections: [
         {
           slug: Posts.slug,

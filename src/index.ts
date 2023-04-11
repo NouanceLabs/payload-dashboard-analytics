@@ -16,6 +16,7 @@ import getPageAggregateData from "./routes/getPageAggregateData";
 import getLiveData from "./routes/getLiveData";
 
 import type { CollectionConfig } from "payload/dist/collections/config/types";
+import type { GlobalConfig } from "payload/dist/globals/config/types";
 import { getPageViewsChart } from "./components/Charts/PageViewsChart";
 import { getAggregateDataWidget } from "./components/Aggregates/AggregateDataWidget";
 import LiveDataWidget from "./components/Live/LiveDataWidget";
@@ -49,7 +50,7 @@ const PageWidgetMap: Record<
 const payloadDashboardAnalytics =
   (incomingConfig: DashboardAnalyticsConfig) =>
   (config: PayloadConfig): PayloadConfig => {
-    const { admin, collections } = config;
+    const { admin, collections, globals } = config;
     const { provider, navigation } = incomingConfig;
     const endpoints = config.endpoints ?? [];
     const apiProvider = getProvider(provider);
@@ -85,10 +86,12 @@ const payloadDashboardAnalytics =
       ],
       ...(collections && {
         collections: collections.map((collection) => {
-          const targetCollection = incomingConfig.collections?.find((col) => {
-            if (col.slug === collection.slug) return true;
-            return false;
-          });
+          const targetCollection = incomingConfig.collections?.find(
+            (pluginCollection) => {
+              if (pluginCollection.slug === collection.slug) return true;
+              return false;
+            }
+          );
 
           if (targetCollection) {
             const collectionConfigWithHooks: CollectionConfig = {
@@ -107,6 +110,32 @@ const payloadDashboardAnalytics =
           }
 
           return collection;
+        }),
+      }),
+      ...(globals && {
+        globals: globals.map((global) => {
+          const targetGlobal = incomingConfig.globals?.find((pluginGlobal) => {
+            if (pluginGlobal.slug === global.slug) return true;
+            return false;
+          });
+
+          if (targetGlobal) {
+            const globalConfigWithHooks: GlobalConfig = {
+              ...global,
+              fields: [
+                ...global.fields,
+                ...targetGlobal.widgets.map((widget, index) => {
+                  const field = PageWidgetMap[widget.type];
+
+                  return field(widget, index);
+                }),
+              ],
+            };
+
+            return globalConfigWithHooks;
+          }
+
+          return global;
         }),
       }),
     };

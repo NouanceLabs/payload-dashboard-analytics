@@ -17,13 +17,16 @@ export interface Collection extends PageItemConfig {
   slug: string;
 }
 
-export interface Global extends PageItemConfig {}
+export interface Global extends PageItemConfig {
+  slug: string;
+}
 
 export type Provider = PlausibleProvider;
 
 export type DashboardAnalyticsConfig = {
   provider: Provider;
   collections?: Collection[];
+  globals?: Global[];
   navigation?: {
     BeforeNavLinks?: NavigationWidgets[];
     AfterNavLinks?: NavigationWidgets[];
