@@ -14,7 +14,7 @@ import getPageChartData from "./routes/getPageChartData";
 import getPageAggregateData from "./routes/getPageAggregateData";
 import type { CollectionConfig } from "payload/dist/collections/config/types";
 import { getPageViewsChart } from "./components/Charts/PageViewsChart";
-import { getAggregateDataWidget } from "./components/Charts/AggregateDataWidget";
+import { getAggregateDataWidget } from "./components/Aggregates/AggregateDataWidget";
 
 const PageWidgetMap: Record<
   PageWidgets["type"],

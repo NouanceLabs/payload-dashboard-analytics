@@ -11,7 +11,7 @@ export type Metrics =
 
 export interface ChartWidget {
   type: "chart";
-  label?: string;
+  label?: string | "hidden";
   metrics: Metrics[];
   timeframe?: Timeframes;
 }
@@ -24,7 +24,7 @@ export type AllAvailableMetrics = Metrics;
 
 export interface InfoWidget {
   type: "info";
-  label?: string;
+  label?: string | "hidden";
   metrics: Metrics[];
   timeframe?: Timeframes;
 }

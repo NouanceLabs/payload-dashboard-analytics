@@ -6,9 +6,8 @@ import React, {
   useRef,
   useMemo,
 } from "react";
-import type { ChartDataPoint, ChartData } from "../../types/data";
+import type { AggregateData } from "../../types/data";
 import type { PageInfoWidget } from "../../types/widgets";
-import type { AxisOptions } from "react-charts";
 import { useDocumentInfo } from "payload/components/utilities";
 import { MetricMap } from "../../providers/plausible/utilities";
 import { useTheme } from "payload/dist/admin/components/utilities/Theme";
@@ -18,7 +17,7 @@ type Props = {
 };
 
 const AggregateDataWidget: React.FC<Props> = ({ options }) => {
-  const [chartData, setChartData] = useState<ChartData>([]);
+  const [data, setData] = useState<AggregateData>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const theme = useTheme();
   const { publishedDoc } = useDocumentInfo();
@@ -37,7 +36,7 @@ const AggregateDataWidget: React.FC<Props> = ({ options }) => {
 
   useEffect(() => {
     if (pageId) {
-      const getChartData = fetch(`/api/analytics/pageChartData`, {
+      const getAggregateData = fetch(`/api/analytics/pageAggregateData`, {
         method: "post",
         credentials: "include",
         headers: {
@@ -51,8 +50,8 @@ const AggregateDataWidget: React.FC<Props> = ({ options }) => {
         }),
       }).then((response) => response.json());
 
-      getChartData.then((data: ChartData) => {
-        setChartData(data);
+      getAggregateData.then((data: AggregateData) => {
+        setData(data);
         setIsLoading(false);
       });
     } else {
@@ -60,7 +59,7 @@ const AggregateDataWidget: React.FC<Props> = ({ options }) => {
     }
   }, [publishedDoc, pageId]);
 
-  const chartLabel = useMemo(() => {
+  const heading = useMemo(() => {
     if (label) return label;
 
     const metricValues: string[] = [];
@@ -77,9 +76,35 @@ const AggregateDataWidget: React.FC<Props> = ({ options }) => {
     <section
       style={{
         marginBottom: "1.5rem",
+        border: "1px solid",
+        borderColor: "var(--theme-elevation-100)",
+        padding: "0.5rem",
       }}
     >
-      aggr data
+      {label !== "hidden" && (
+        <h1 style={{ fontSize: "1.25rem", marginBottom: "0.75rem" }}>
+          {heading} ({timeframeIndicator})
+        </h1>
+      )}
+      <div>
+        {isLoading ? (
+          <>Loading...</>
+        ) : (
+          <ul style={{ margin: "0", listStyle: "none", padding: "0" }}>
+            {data.map((item, index) => {
+              return (
+                <li
+                  key={index}
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <div style={{ fontWeight: "700" }}>{item.label}</div>
+                  <div>{item.value}</div>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </div>
     </section>
   );
 };

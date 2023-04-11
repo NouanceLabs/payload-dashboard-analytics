@@ -1,6 +1,7 @@
 import type { PlausibleProvider } from "../../types/providers";
 import type { PageChartOptions } from "..";
-import { MetricMap } from "./client";
+import type { ChartData } from "../../types/data";
+import { MetricMap } from "./utilities";
 import payload from "payload";
 import client from "./client";
 
@@ -29,8 +30,8 @@ async function getPageChartData(
       payload.logger.error(error);
     });
 
-  /* @todo: fix types later */
-  /* @ts-ignore */
+  // @todo: fix types later
+  // @ts-ignore
   const dataSeries: ChartData = options.metrics.map((metric) => {
     const mappedMetric = Object.entries(MetricMap).find(([key, value]) => {
       return metric === key;

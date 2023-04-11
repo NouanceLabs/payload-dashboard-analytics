@@ -1,5 +1,6 @@
-import { Endpoint } from "payload/config";
+import type { Endpoint } from "payload/config";
 import { ApiProvider } from "../../providers";
+import type { ChartData } from "../../types/data";
 import payload from "payload";
 
 const handler = (provider: ApiProvider) => {
@@ -7,13 +8,12 @@ const handler = (provider: ApiProvider) => {
     try {
       const { timeframe, metrics, pageId } = req.body;
 
-      console.log("reached handler with", timeframe, metrics, pageId);
-
-      const data = await provider.getPageChartData({
+      const data: ChartData = await provider.getPageChartData({
         timeframe: timeframe,
         metrics: metrics,
         pageId,
       });
+
       res.status(200).send(data);
     } catch (error) {
       payload.logger.error(error);

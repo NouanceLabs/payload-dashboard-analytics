@@ -1,9 +1,6 @@
-import { AllAvailableMetrics } from "../../types/widgets";
+import { MetricsMap } from "../../types/data";
 
-export const MetricMap: Record<
-  AllAvailableMetrics,
-  { label: string; value: string }
-> = {
+export const MetricMap: MetricsMap = {
   views: {
     label: "Views",
     value: "pageviews",

@@ -36,10 +36,11 @@ const PageViewsChart: React.FC<Props> = ({ options }) => {
     else return "";
   }, [publishedDoc]);
 
-  const timeframeIndicator =
-    timeframe === "currentMonth"
+  const timeframeIndicator = useMemo(() => {
+    return timeframe === "currentMonth"
       ? new Date().toLocaleString("default", { month: "long" })
       : timeframe ?? "30d";
+  }, [timeframe]);
 
   useEffect(() => {
     if (pageId) {
