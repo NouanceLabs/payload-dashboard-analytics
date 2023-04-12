@@ -25,7 +25,7 @@ const GlobalViewsChart: React.FC<Props> = ({}) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        timeframe: "30d",
+        timeframe: "currentMonth",
         metrics: ["views"],
       }),
     }).then((response) => response.json());
@@ -41,7 +41,7 @@ const GlobalViewsChart: React.FC<Props> = ({}) => {
   }, []);
 
   const chartLabel = useMemo(() => {
-    return "Sitewide views";
+    return "Views";
   }, []);
 
   const primaryAxis = React.useMemo<AxisOptions<ChartDataPoint>>(() => {
@@ -69,6 +69,7 @@ const GlobalViewsChart: React.FC<Props> = ({}) => {
     <section
       style={{
         marginBottom: "1.5rem",
+        maxWidth: "70rem",
       }}
     >
       {chartData?.length && chartData.length > 0 ? (

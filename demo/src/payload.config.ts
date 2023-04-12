@@ -61,7 +61,8 @@ export default buildConfig({
         ],
       },
       dashboard: {
-        beforeDashboard: ["topPages", "viewsChart"],
+        beforeDashboard: ["viewsChart"],
+        afterDashboard: ["topPages"],
       },
       globals: [
         {

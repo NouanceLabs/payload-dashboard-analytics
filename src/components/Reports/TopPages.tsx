@@ -42,8 +42,9 @@ const TopPages: React.FC<Props> = () => {
         marginBottom: "1.5rem",
         border: "1px solid",
         borderColor: "var(--theme-elevation-100)",
-        padding: "0.5rem",
+        padding: "1rem",
         width: "100%",
+        maxWidth: "70rem",
       }}
     >
       <h1 style={{ fontSize: "1.25rem", marginBottom: "0.75rem" }}>
@@ -63,6 +64,7 @@ const TopPages: React.FC<Props> = () => {
                     display: "flex",
                     justifyContent: "space-between",
                     width: "100%",
+                    marginBottom: "0.5rem",
                   }}
                   key={itemIndex}
                 >
