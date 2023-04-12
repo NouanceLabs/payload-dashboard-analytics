@@ -120,6 +120,8 @@ Navigation widgets have no configuration.
 
 #### Live visitors
 
+![Screenshot from 2023-04-12 18-12-58](https://user-images.githubusercontent.com/35137243/231445032-37f06d87-11cc-47aa-894f-e893e185c3ea.png)
+
 **type** `live`
 
 ```ts
@@ -134,6 +136,8 @@ Dashboard widgets have no configuration.
 
 #### Views chart
 
+![Screenshot from 2023-04-12 18-13-28](https://user-images.githubusercontent.com/35137243/231444975-55154b82-5a91-46fd-b31b-64724e7e48c2.png)
+
 **type** `viewsChart`
 
 ```ts
@@ -141,6 +145,8 @@ Dashboard widgets have no configuration.
 ```
 
 #### Top pages
+
+![Screenshot from 2023-04-12 18-13-36](https://user-images.githubusercontent.com/35137243/231444945-b92e3fd0-b60f-4777-9342-97edf9a7ccd9.png)
 
 **type** `topPages`
 
@@ -153,6 +159,8 @@ Dashboard widgets have no configuration.
 Page widgets have more configuration available with custom timeframes and metrics. These are usable on both globals and collections.
 
 #### Page chart
+
+![Screenshot from 2023-04-12 18-13-08](https://user-images.githubusercontent.com/35137243/231444858-89c987a5-5e42-419e-935c-70a7feb9a1b4.png)
 
 - **type** | `chart` | required
 
@@ -180,6 +188,8 @@ Page widgets have more configuration available with custom timeframes and metric
 ```
 
 #### Page info
+
+![Screenshot from 2023-04-12 18-13-17](https://user-images.githubusercontent.com/35137243/231444901-ddfbef1d-d433-4f52-a5c9-d0757b07e04d.png)
 
 - **type** | `info` | required
 
