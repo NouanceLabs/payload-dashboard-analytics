@@ -16,8 +16,6 @@ export type Properties =
   | "source"
   | "country";
 
-export type AllAvailableMetrics = Metrics;
-
 /* Keeping this for later */
 /* export type Reports = "topSources" | "topPages" | "topCountries"; */
 

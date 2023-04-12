@@ -95,7 +95,7 @@ const payloadDashboardAnalytics =
                 ...targetCollection.widgets.map((widget, index) => {
                   const field = PageWidgetMap[widget.type];
 
-                  return field(widget, index);
+                  return field(widget, index, apiProvider.metricsMap);
                 }),
               ],
             };
@@ -121,7 +121,7 @@ const payloadDashboardAnalytics =
                 ...targetGlobal.widgets.map((widget, index) => {
                   const field = PageWidgetMap[widget.type];
 
-                  return field(widget, index);
+                  return field(widget, index, apiProvider.metricsMap);
                 }),
               ],
             };

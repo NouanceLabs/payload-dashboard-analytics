@@ -6,15 +6,15 @@ import React, {
   useRef,
   useMemo,
 } from "react";
-import type { ChartDataPoint, ChartData } from "../../types/data";
-import type { PageChartWidget, Metrics } from "../../types/widgets";
+import type { ChartDataPoint, ChartData, MetricsMap } from "../../types/data";
+import type { PageChartWidget } from "../../types/widgets";
 import type { AxisOptions } from "react-charts";
 import { useDocumentInfo } from "payload/components/utilities";
-import { MetricMap } from "../../providers/plausible/utilities";
 import { useTheme } from "payload/dist/admin/components/utilities/Theme";
 
 type Props = {
   options: PageChartWidget;
+  metricsMap: MetricsMap;
 };
 
 const ChartComponent = lazy(() =>
@@ -23,7 +23,7 @@ const ChartComponent = lazy(() =>
   })
 );
 
-const PageViewsChart: React.FC<Props> = ({ options }) => {
+const PageViewsChart: React.FC<Props> = ({ options, metricsMap }) => {
   const [chartData, setChartData] = useState<ChartData>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const theme = useTheme();
@@ -44,7 +44,7 @@ const PageViewsChart: React.FC<Props> = ({ options }) => {
 
   useEffect(() => {
     if (pageId) {
-      const getChartData = fetch(`/api/analytics/pageChartData`, {
+      const getChartData = fetch(`/api/analytics/pageChart`, {
         method: "post",
         credentials: "include",
         headers: {
@@ -73,7 +73,7 @@ const PageViewsChart: React.FC<Props> = ({ options }) => {
     if (metrics) {
       const metricValues: string[] = [];
 
-      Object.entries(MetricMap).forEach(([key, value]) => {
+      Object.entries(metricsMap).forEach(([key, value]) => {
         // @ts-ignore
         if (metrics.includes(key)) metricValues.push(value.label);
       });
@@ -82,7 +82,7 @@ const PageViewsChart: React.FC<Props> = ({ options }) => {
     } else {
       return "No metrics defined for this widget";
     }
-  }, [label, metrics]);
+  }, [label, metrics, metricsMap]);
 
   const primaryAxis = React.useMemo<AxisOptions<ChartDataPoint>>(() => {
     return {
@@ -140,7 +140,11 @@ const PageViewsChart: React.FC<Props> = ({ options }) => {
   );
 };
 
-export const getPageViewsChart = (props?: any, options?: PageChartWidget) => {
+export const getPageViewsChart = (
+  metricsMap: MetricsMap,
+  props?: any,
+  options?: PageChartWidget
+) => {
   const combinedProps: Props = {
     ...props,
     options,

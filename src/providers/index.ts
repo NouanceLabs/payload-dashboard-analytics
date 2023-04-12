@@ -6,6 +6,7 @@ import type {
   AggregateData,
   LiveData,
   ReportData,
+  MetricsMap,
 } from "../types/data";
 
 type BaseOptions = {
@@ -46,6 +47,7 @@ export type ApiProvider = {
   getPageChartData: (options: PageChartOptions) => Promise<ChartData>;
   getLiveData: (options: LiveDataOptions) => Promise<LiveData>;
   getReportData: (options: ReportDataOptions) => Promise<ReportData>;
+  metricsMap: MetricsMap;
 };
 
 const getProvider = (provider: Provider) => {

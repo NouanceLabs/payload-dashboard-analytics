@@ -15,6 +15,8 @@ import type {
   ReportDataOptions,
 } from "..";
 
+import { MetricMap } from "./utilities";
+
 const plausible = (provider: PlausibleProvider): ApiProvider => {
   return {
     getGlobalAggregateData: async (options: GlobalAggregateOptions) =>
@@ -29,6 +31,7 @@ const plausible = (provider: PlausibleProvider): ApiProvider => {
       await getLiveData(provider, options),
     getReportData: async (options: ReportDataOptions) =>
       await getReportData(provider, options),
+    metricsMap: MetricMap,
   };
 };
 

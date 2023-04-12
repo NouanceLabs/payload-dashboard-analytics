@@ -6,17 +6,17 @@ import React, {
   useRef,
   useMemo,
 } from "react";
-import type { AggregateData } from "../../types/data";
+import type { AggregateData, MetricsMap } from "../../types/data";
 import type { PageInfoWidget } from "../../types/widgets";
 import { useDocumentInfo } from "payload/components/utilities";
-import { MetricMap } from "../../providers/plausible/utilities";
 import { useTheme } from "payload/dist/admin/components/utilities/Theme";
 
 type Props = {
   options: PageInfoWidget;
+  metricsMap: MetricsMap;
 };
 
-const AggregateDataWidget: React.FC<Props> = ({ options }) => {
+const AggregateDataWidget: React.FC<Props> = ({ options, metricsMap }) => {
   const [data, setData] = useState<AggregateData>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const theme = useTheme();
@@ -36,7 +36,7 @@ const AggregateDataWidget: React.FC<Props> = ({ options }) => {
 
   useEffect(() => {
     if (pageId) {
-      const getAggregateData = fetch(`/api/analytics/pageAggregateData`, {
+      const getAggregateData = fetch(`/api/analytics/pageAggregate`, {
         method: "post",
         credentials: "include",
         headers: {
@@ -64,13 +64,13 @@ const AggregateDataWidget: React.FC<Props> = ({ options }) => {
 
     const metricValues: string[] = [];
 
-    Object.entries(MetricMap).forEach(([key, value]) => {
+    Object.entries(metricsMap).forEach(([key, value]) => {
       /* @ts-ignore */
       if (metrics.includes(key)) metricValues.push(value.label);
     });
 
     return metricValues.join(", ");
-  }, [options]);
+  }, [options, metricsMap]);
 
   return (
     <section
@@ -110,6 +110,7 @@ const AggregateDataWidget: React.FC<Props> = ({ options }) => {
 };
 
 export const getAggregateDataWidget = (
+  metricsMap: MetricsMap,
   props?: any,
   options?: PageInfoWidget
 ) => {

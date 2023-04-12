@@ -1,4 +1,4 @@
-import type { AllAvailableMetrics } from "./widgets";
+import type { Metrics, Properties } from "./widgets";
 
 export interface ChartDataPoint {
   timestamp: Date;
@@ -13,7 +13,7 @@ export interface ChartDataSeries {
 export type ChartData = ChartDataSeries[];
 
 export type AggregateData = Array<{
-  label: AllAvailableMetrics;
+  label: Metrics;
   value: string | number;
 }>;
 
@@ -23,7 +23,6 @@ export type LiveData = {
 
 export type ReportData = {}[];
 
-export type MetricsMap = Record<
-  AllAvailableMetrics,
-  { label: string; value: string }
->;
+export type MetricsMap = Record<Metrics, { label: string; value: string }>;
+
+export type PropertyMap = Record<Properties, { label: string; value: string }>;

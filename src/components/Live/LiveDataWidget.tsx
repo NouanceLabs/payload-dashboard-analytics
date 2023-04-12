@@ -8,7 +8,6 @@ import React, {
 } from "react";
 import type { LiveData } from "../../types/data";
 import type { LiveWidget } from "../../types/widgets";
-import { MetricMap } from "../../providers/plausible/utilities";
 import { useTheme } from "payload/dist/admin/components/utilities/Theme";
 
 type Props = {};
@@ -21,7 +20,7 @@ const LiveDataWidget: React.FC<Props> = ({}) => {
   /* const { label } = options; */
 
   useEffect(() => {
-    const getLiveData = fetch(`/api/analytics/liveData`, {
+    const getLiveData = fetch(`/api/analytics/live`, {
       method: "post",
       credentials: "include",
       headers: {

@@ -1,11 +1,11 @@
 import type { PlausibleProvider } from "../../types/providers";
-import type { AllAvailableMetrics } from "../../types/widgets";
+import type { Metrics } from "../../types/widgets";
 import { MetricMap } from "./utilities";
 
 type ClientOptions = {
   endpoint: string;
   timeframe?: string;
-  metrics?: AllAvailableMetrics[];
+  metrics?: Metrics[];
 };
 
 function client(provider: PlausibleProvider, options: ClientOptions) {
@@ -54,6 +54,7 @@ function client(provider: PlausibleProvider, options: ClientOptions) {
     baseUrl: baseUrl,
     metric: plausibleMetrics,
     url: url,
+    metricsMap: MetricMap,
     fetch: async (customUrl?: string) => {
       const fetchUrl = customUrl ?? url.toString();
 
