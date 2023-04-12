@@ -71,7 +71,7 @@ function client(provider: PlausibleProvider, options: ClientOptions) {
     propertiesMap: PropertyMap,
     fetch: async (customUrl?: string) => {
       const fetchUrl = customUrl ?? url.toString();
-      console.log("fetching with", url.toString());
+
       return await fetch(fetchUrl, {
         method: "get",
         headers: new Headers({

@@ -53,6 +53,9 @@ export default buildConfig({
   plugins: [
     payloadDashboardAnalytics({
       provider: plausibleProvider,
+      access: (user: any) => {
+        return Boolean(user);
+      },
       navigation: {
         afterNavLinks: [
           {

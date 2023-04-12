@@ -24,7 +24,7 @@ const payloadDashboardAnalytics =
   (incomingConfig: DashboardAnalyticsConfig) =>
   (config: PayloadConfig): PayloadConfig => {
     const { admin, collections, globals } = config;
-    const { provider, navigation, dashboard } = incomingConfig;
+    const { provider, navigation, dashboard, access } = incomingConfig;
     const endpoints = config.endpoints ?? [];
     const apiProvider = getProvider(provider);
 
@@ -71,12 +71,12 @@ const payloadDashboardAnalytics =
       },
       endpoints: [
         ...endpoints,
-        getGlobalAggregate(apiProvider),
-        getGlobalChart(apiProvider),
-        getPageChart(apiProvider),
-        getPageAggregate(apiProvider),
-        getLive(apiProvider),
-        getReport(apiProvider),
+        getGlobalAggregate(apiProvider, access),
+        getGlobalChart(apiProvider, access),
+        getPageChart(apiProvider, access),
+        getPageAggregate(apiProvider, access),
+        getLive(apiProvider, access),
+        getReport(apiProvider, access),
       ],
       ...(collections && {
         collections: collections.map((collection) => {

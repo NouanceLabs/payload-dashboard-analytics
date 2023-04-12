@@ -23,8 +23,11 @@ export interface Global extends PageItemConfig {
 
 export type Provider = PlausibleProvider;
 
+export type AccessControl = (user: any) => boolean;
+
 export type DashboardAnalyticsConfig = {
   provider: Provider;
+  access?: AccessControl;
   collections?: Collection[];
   globals?: Global[];
   navigation?: {

@@ -1,9 +1,22 @@
-import { Endpoint } from "payload/config";
-import { ApiProvider } from "../../providers";
+import type { Endpoint } from "payload/config";
+import type { ApiProvider } from "../../providers";
+import type { AccessControl } from "../../types";
 
-const handler = (provider: ApiProvider) => {
+const handler = (provider: ApiProvider, access?: AccessControl) => {
   const handler: Endpoint["handler"] = async (req, res, next) => {
-    const { payload } = req;
+    const { payload, user } = req;
+
+    if (access) {
+      const accessControl = access(user);
+
+      if (!accessControl) {
+        payload.logger.error("📊 Analytics API: Request fails access control.");
+        res
+          .status(500)
+          .send("Request fails access control. Are you authenticated?");
+        return next();
+      }
+    }
 
     try {
       const data = await provider.getLiveData({});
