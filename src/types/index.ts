@@ -33,7 +33,6 @@ export type DashboardAnalyticsConfig = {
   };
   dashboard?: {
     beforeDashboard?: DashboardWidgets[];
-    dashboard?: DashboardWidgets[];
     afterDashboard?: DashboardWidgets[];
   };
 };

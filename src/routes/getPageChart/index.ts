@@ -2,12 +2,12 @@ import { Endpoint } from "payload/config";
 import handler from "./handler";
 import { ApiProvider } from "../../providers";
 
-const getLiveData = (provider: ApiProvider): Endpoint => {
+const getPageChart = (provider: ApiProvider): Endpoint => {
   return {
-    path: "/analytics/liveData",
+    path: "/analytics/pageChart",
     method: "post",
     handler: handler(provider),
   };
 };
 
-export default getLiveData;
+export default getPageChart;

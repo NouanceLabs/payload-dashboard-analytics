@@ -1,13 +1,23 @@
 import plausible from "./plausible";
 import type { Provider } from "../types";
-import type { ChartWidget, InfoWidget } from "../types/widgets";
-import type { ChartData, AggregateData, LiveData } from "../types/data";
+import type { ChartWidget, InfoWidget, ReportWidget } from "../types/widgets";
+import type {
+  ChartData,
+  AggregateData,
+  LiveData,
+  ReportData,
+} from "../types/data";
 
 type BaseOptions = {
   timeframe?: string;
 };
 
 export interface LiveDataOptions {}
+
+export interface ReportDataOptions extends BaseOptions {
+  metrics: ReportWidget["metrics"];
+  property: ReportWidget["property"];
+}
 
 export interface GlobalAggregateOptions extends BaseOptions {
   metrics: InfoWidget["metrics"];
@@ -35,6 +45,7 @@ export type ApiProvider = {
   ) => Promise<AggregateData>;
   getPageChartData: (options: PageChartOptions) => Promise<ChartData>;
   getLiveData: (options: LiveDataOptions) => Promise<LiveData>;
+  getReportData: (options: ReportDataOptions) => Promise<ReportData>;
 };
 
 const getProvider = (provider: Provider) => {

@@ -21,6 +21,8 @@ export type LiveData = {
   visitors: number;
 };
 
+export type ReportData = {}[];
+
 export type MetricsMap = Record<
   AllAvailableMetrics,
   { label: string; value: string }

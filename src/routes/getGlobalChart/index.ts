@@ -2,12 +2,12 @@ import { Endpoint } from "payload/config";
 import handler from "./handler";
 import { ApiProvider } from "../../providers";
 
-const getPageAggregateData = (provider: ApiProvider): Endpoint => {
+const getGlobalChart = (provider: ApiProvider): Endpoint => {
   return {
-    path: "/analytics/pageAggregateData",
+    path: "/analytics/globalChart",
     method: "post",
     handler: handler(provider),
   };
 };
 
-export default getPageAggregateData;
+export default getGlobalChart;

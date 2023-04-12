@@ -9,6 +9,13 @@ export type Metrics =
   | "bounceRate"
   | "sessionDuration";
 
+export type Properties =
+  | "page"
+  | "entryPoint"
+  | "exitPoint"
+  | "source"
+  | "country";
+
 export type AllAvailableMetrics = Metrics;
 
 /* Keeping this for later */
@@ -39,6 +46,8 @@ export interface LiveWidget {
 export interface ReportWidget {
   type: "report";
   report: Reports;
+  property: Properties;
+  metrics: Metrics[];
   timeframe?: Timeframes;
 }
 
