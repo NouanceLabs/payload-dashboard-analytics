@@ -21,8 +21,14 @@ export type LiveData = {
   visitors: number;
 };
 
-export type ReportData = {}[];
+export type ReportData = Array<{
+  [label: string]: string;
+  values: Array<{ [value: string]: string | number }>;
+}>;
 
 export type MetricsMap = Record<Metrics, { label: string; value: string }>;
 
-export type PropertyMap = Record<Properties, { label: string; value: string }>;
+export type PropertiesMap = Record<
+  Properties,
+  { label: string; value: string }
+>;

@@ -10,6 +10,7 @@ import type { Field } from "payload/dist/fields/config/types";
 import { getPageViewsChart } from "../components/Charts/PageViewsChart";
 import { getAggregateDataWidget } from "../components/Aggregates/AggregateDataWidget";
 import LiveDataComponent from "../components/Live/LiveDataWidget";
+import GlobalViewsChart from "../components/Charts/GlobalViewsChart";
 import TopPages from "../components/Reports/TopPages";
 
 export const PageWidgetMap: Record<
@@ -46,5 +47,5 @@ export const NavigationWidgetMap: Record<NavigationWidgets["type"], React.FC> =
 
 export const DashboardWidgetMap: Record<DashboardWidgets, React.FC> = {
   topPages: TopPages,
-  viewsChart: TopPages,
+  viewsChart: GlobalViewsChart,
 };

@@ -1,19 +1,30 @@
 import { Endpoint } from "payload/config";
 import { ApiProvider } from "../../providers";
-import payload from "payload";
 
 const handler = (provider: ApiProvider) => {
   const handler: Endpoint["handler"] = async (req, res, next) => {
+    const { payload } = req;
+    const { timeframe, metrics } = req.body;
+
+    if (!metrics) {
+      payload.logger.error("📊 Analytics API: Missing metrics argument.");
+      res.status(500).send("Missing metrics argument.");
+      return next();
+    }
+
     try {
-      const { timeframe, metrics } = req.body;
-      const data = await provider.getGlobalAggregateData({
-        timeframe,
-        metrics,
-      });
+      const data = await provider
+        .getGlobalAggregateData({
+          timeframe,
+          metrics,
+        })
+        .catch((error) => payload.logger.error(error));
+
       res.status(200).send(data);
     } catch (error) {
-      payload.logger.error(payload);
-      res.sendStatus(500);
+      payload.logger.error(error);
+      res.status(500).send(`📊 Analytics API: ${error}`);
+      return next();
     }
   };
 

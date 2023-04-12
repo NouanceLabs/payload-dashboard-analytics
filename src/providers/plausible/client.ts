@@ -1,15 +1,16 @@
 import type { PlausibleProvider } from "../../types/providers";
-import type { Metrics } from "../../types/widgets";
-import { MetricMap } from "./utilities";
+import type { Metrics, Properties } from "../../types/widgets";
+import { MetricMap, PropertyMap } from "./utilities";
 
 type ClientOptions = {
   endpoint: string;
   timeframe?: string;
   metrics?: Metrics[];
+  property?: Properties;
 };
 
 function client(provider: PlausibleProvider, options: ClientOptions) {
-  const { endpoint, timeframe, metrics } = options;
+  const { endpoint, timeframe, metrics, property } = options;
   const host = provider.host ?? `https://plausible.io`;
   const apiVersion = `v1`; // for future use
 
@@ -49,15 +50,28 @@ function client(provider: PlausibleProvider, options: ClientOptions) {
   url.searchParams.append("period", period());
   url.searchParams.append("metrics", String(plausibleMetrics));
 
+  if (property) {
+    const availableProperties = Object.entries(PropertyMap);
+
+    const foundMetric = availableProperties.find((mappedProperty) => {
+      return mappedProperty[0] === property;
+    });
+
+    if (foundMetric) {
+      url.searchParams.append("property", String(foundMetric[1].value));
+    }
+  }
+
   return {
     host: host,
     baseUrl: baseUrl,
     metric: plausibleMetrics,
     url: url,
     metricsMap: MetricMap,
+    propertiesMap: PropertyMap,
     fetch: async (customUrl?: string) => {
       const fetchUrl = customUrl ?? url.toString();
-
+      console.log("fetching with", url.toString());
       return await fetch(fetchUrl, {
         method: "get",
         headers: new Headers({
