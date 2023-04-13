@@ -6,18 +6,27 @@ import Tags from "./collections/Tags";
 import Users from "./collections/Users";
 import Media from "./collections/Media";
 import Homepage from "./globals/Homepage";
-import payloadDashboardAnalytics from "../../src/index";
-import { PlausibleProvider } from "../../src/types/providers";
+import dashboardAnalytics from "../../src/index";
+import { PlausibleProvider, GoogleProvider } from "../../src/types/providers";
 
 const PLAUSIBLE_API_KEY = process.env.PLAUSIBLE_API_KEY;
 const PLAUSIBLE_HOST = process.env.PLAUSIBLE_HOST;
 const PLAUSIBLE_SITE_ID = process.env.PLAUSIBLE_SITE_ID;
+
+const GOOGLE_PROPERTY_ID = process.env.GOOGLE_PROPERTY_ID;
+const GOOGLE_CREDENTIALS_FILE = process.env.GOOGLE_CREDENTIALS_FILE;
 
 const plausibleProvider: PlausibleProvider = {
   source: "plausible",
   apiSecret: PLAUSIBLE_API_KEY,
   siteId: PLAUSIBLE_SITE_ID,
   host: PLAUSIBLE_HOST,
+};
+
+const googleProvider: GoogleProvider = {
+  source: "google",
+  credentials: GOOGLE_CREDENTIALS_FILE,
+  propertyId: GOOGLE_PROPERTY_ID,
 };
 
 export default buildConfig({
@@ -51,8 +60,8 @@ export default buildConfig({
     schemaOutputFile: path.resolve(__dirname, "generated-schema.graphql"),
   },
   plugins: [
-    payloadDashboardAnalytics({
-      provider: plausibleProvider,
+    dashboardAnalytics({
+      provider: googleProvider,
       access: (user: any) => {
         return Boolean(user);
       },

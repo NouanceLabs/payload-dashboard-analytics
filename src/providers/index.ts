@@ -1,4 +1,5 @@
 import plausible from "./plausible";
+import google from "./google";
 import type { Provider } from "../types";
 import type { ChartWidget, InfoWidget, ReportWidget } from "../types/widgets";
 import type {
@@ -54,6 +55,8 @@ const getProvider = (provider: Provider) => {
   switch (provider.source) {
     case "plausible":
       return plausible(provider);
+    case "google":
+      return google(provider);
   }
 };
 

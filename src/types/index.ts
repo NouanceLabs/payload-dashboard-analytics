@@ -1,4 +1,4 @@
-import type { PlausibleProvider } from "./providers";
+import type { PlausibleProvider, GoogleProvider } from "./providers";
 import type {
   DashboardWidgets,
   PageWidgets,
@@ -21,7 +21,7 @@ export interface Global extends PageItemConfig {
   slug: string;
 }
 
-export type Provider = PlausibleProvider;
+export type Provider = PlausibleProvider | GoogleProvider;
 
 export type AccessControl = (user: any) => boolean;
 

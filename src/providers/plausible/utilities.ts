@@ -20,14 +20,14 @@ export const PropertyMap: PropertiesMap = {
     label: "Pages",
     value: "event:page",
   },
-  entryPoint: {
+  /* entryPoint: {
     label: "Pages",
     value: "event:page",
   },
   exitPoint: {
     label: "Pages",
     value: "event:page",
-  },
+  }, */
   source: {
     label: "Pages",
     value: "event:page",

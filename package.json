@@ -24,9 +24,11 @@
   "license": "MIT",
   "peerDependencies": {
     "payload": "^1.6.16",
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "@google-analytics/data": "^3.2"
   },
   "devDependencies": {
+    "@google-analytics/data": "^3.2.1",
     "@types/react-router-dom": "^5.3.3",
     "payload": "^1.6.26",
     "react": "^18",

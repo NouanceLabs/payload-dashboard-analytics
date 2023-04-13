@@ -2,3 +2,5 @@ node_modules
 media
 
 .env
+
+ga_credentials.json

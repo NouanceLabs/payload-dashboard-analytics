@@ -11,8 +11,8 @@ export type Metrics =
 
 export type Properties =
   | "page"
-  | "entryPoint"
-  | "exitPoint"
+  /* | "entryPoint"
+  | "exitPoint" */
   | "source"
   | "country";
 

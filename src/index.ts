@@ -20,7 +20,7 @@ import {
   DashboardWidgetMap,
 } from "./utilities/widgetMaps";
 
-const payloadDashboardAnalytics =
+const dashboardAnalytics =
   (incomingConfig: DashboardAnalyticsConfig) =>
   (config: PayloadConfig): PayloadConfig => {
     const { admin, collections, globals } = config;
@@ -67,7 +67,7 @@ const payloadDashboardAnalytics =
             ],
           }),
         },
-        webpack: extendWebpackConfig(config),
+        webpack: extendWebpackConfig(config, provider.source),
       },
       endpoints: [
         ...endpoints,
@@ -137,4 +137,4 @@ const payloadDashboardAnalytics =
     return processedConfig;
   };
 
-export default payloadDashboardAnalytics;
+export default dashboardAnalytics;
