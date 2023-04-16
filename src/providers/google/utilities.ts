@@ -1,4 +1,13 @@
 import type { MetricsMap, PropertiesMap } from "../../types/data";
+import { Timeframes } from "../../types/widgets";
+import type { protos } from "@google-analytics/data";
+import {
+  format,
+  subDays,
+  subMonths,
+  startOfMonth,
+  lastDayOfMonth,
+} from "date-fns";
 
 export const MetricMap: MetricsMap = {
   views: {
@@ -34,6 +43,13 @@ export const PropertyMap: PropertiesMap = {
   },
 };
 
+/* const TimeframeMap: Record<Exclude<Timeframes, "currentMonth">, number> = {
+  "12mo": "",
+  "6mo": "",
+  "30d": "",
+  "7d": "",
+}; */
+
 export const getMetrics = (metrics: Array<keyof MetricsMap>) => {
   const myMetrics: string[] = [];
   const availableMetrics = Object.entries(MetricMap);
@@ -47,4 +63,50 @@ export const getMetrics = (metrics: Array<keyof MetricsMap>) => {
   });
 
   return myMetrics;
+};
+
+interface DateRangeReturn {
+  dates: {
+    startDate: Date;
+    endDate: Date;
+  };
+  formatted: protos.google.analytics.data.v1beta.IDateRange;
+}
+
+export const DateFormat = "yyyy-MM-dd";
+export const GoogleDateFormat = "yyyyMMdd";
+
+export const getDateRange = (timeframe: Timeframes): DateRangeReturn => {
+  const currentDate = new Date();
+
+  const startDate = (): Date => {
+    const date = new Date(currentDate);
+
+    switch (timeframe) {
+      case "12mo":
+        return subMonths(date, 12);
+      case "6mo":
+        return subMonths(date, 6);
+      case "30d":
+        return subDays(date, 30);
+      case "7d":
+        return subDays(date, 7);
+      case "currentMonth":
+        return startOfMonth(date);
+    }
+  };
+
+  const endDate =
+    timeframe === "currentMonth" ? lastDayOfMonth(currentDate) : currentDate;
+
+  return {
+    dates: {
+      startDate: startDate(),
+      endDate: endDate,
+    },
+    formatted: {
+      startDate: format(startDate(), DateFormat),
+      endDate: format(endDate, DateFormat),
+    },
+  };
 };

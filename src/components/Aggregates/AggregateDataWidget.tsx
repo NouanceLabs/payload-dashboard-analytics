@@ -92,13 +92,19 @@ const AggregateDataWidget: React.FC<Props> = ({ options, metricsMap }) => {
         ) : (
           <ul style={{ margin: "0", listStyle: "none", padding: "0" }}>
             {data.map((item, index) => {
+              const value =
+                typeof item.value === "string"
+                  ? Math.floor(parseInt(item.value))
+                  : Math.floor(item.value);
               return (
                 <li
                   key={index}
                   style={{ display: "flex", justifyContent: "space-between" }}
                 >
-                  <div style={{ fontWeight: "700" }}>{item.label}</div>
-                  <div>{item.value}</div>
+                  <div style={{ fontWeight: "700" }}>
+                    {metricsMap ? metricsMap[item.label].label : item.label}
+                  </div>
+                  <div>{value}</div>
                 </li>
               );
             })}
@@ -117,6 +123,7 @@ export const getAggregateDataWidget = (
   const combinedProps: Props = {
     ...props,
     options,
+    metricsMap,
   };
   return <AggregateDataWidget {...combinedProps} />;
 };

@@ -97,9 +97,10 @@ const PageViewsChart: React.FC<Props> = ({ options, metricsMap }) => {
     () => [
       {
         getValue: (datum) => {
-          return datum.value;
+          return Math.floor(datum.value);
         },
         elementType: "line",
+        shouldNice: true,
       },
     ],
     []
@@ -148,6 +149,7 @@ export const getPageViewsChart = (
   const combinedProps: Props = {
     ...props,
     options,
+    metricsMap,
   };
   return <PageViewsChart {...combinedProps} />;
 };

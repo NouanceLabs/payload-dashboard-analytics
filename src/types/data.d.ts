@@ -1,7 +1,7 @@
 import type { Metrics, Properties } from "./widgets";
 
 export interface ChartDataPoint {
-  timestamp: Date;
+  timestamp: string;
   value: number;
 }
 

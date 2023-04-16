@@ -19,7 +19,6 @@ const handler = (provider: ApiProvider, access?: AccessControl) => {
     }
 
     try {
-      console.log("fetching data");
       const data = await provider.getLiveData({});
 
       res.status(200).send(data);

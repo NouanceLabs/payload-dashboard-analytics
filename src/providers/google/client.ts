@@ -3,14 +3,9 @@ import type { Metrics, Properties } from "../../types/widgets";
 import { BetaAnalyticsDataClient } from "@google-analytics/data";
 import { MetricMap, PropertyMap } from "./utilities";
 
-type ClientOptions = {
-  endpoint: string;
-  timeframe?: string;
-  metrics?: Metrics[];
-  property?: Properties;
-};
+type ClientOptions = {};
 
-function client(provider: GoogleProvider, options: ClientOptions) {
+function client(provider: GoogleProvider, options?: ClientOptions) {
   const analyticsDataClient = new BetaAnalyticsDataClient({
     keyFilename: provider.credentials,
   });

@@ -1,18 +1,18 @@
 import type { GoogleProvider } from "../../types/providers";
-import type { PageAggregateOptions } from "..";
+import type { GlobalAggregateOptions } from "..";
 import type { AggregateData } from "../../types/data";
 import { getMetrics, getDateRange } from "./utilities";
 import client from "./client";
 import type { protos } from "@google-analytics/data";
 import type { Timeframes } from "../../types/widgets";
 
-async function getPageAggregateData(
+async function getGlobalAggregateData(
   provider: GoogleProvider,
-  options: PageAggregateOptions
+  options: GlobalAggregateOptions
 ) {
   const googleClient = client(provider);
 
-  const { metrics, pageId } = options;
+  const { metrics } = options;
   const timeframe: Timeframes = (options.timeframe as Timeframes) ?? "30d";
 
   const usedMetrics = getMetrics(metrics);
@@ -22,7 +22,7 @@ async function getPageAggregateData(
   const request: protos.google.analytics.data.v1beta.IRunReportRequest = {
     property: `properties/${provider.propertyId}`,
     dateRanges: [dateRange.formatted],
-    dimensions: [{ name: "pagePath" }],
+    dimensions: [],
     metrics: usedMetrics.map((metric) => {
       return {
         name: metric,
@@ -30,22 +30,6 @@ async function getPageAggregateData(
     }),
     keepEmptyRows: false,
     metricAggregations: [1],
-    dimensionFilter: {
-      andGroup: {
-        expressions: [
-          {
-            filter: {
-              fieldName: "pagePath",
-              stringFilter: {
-                matchType: "EXACT",
-                value: pageId,
-                caseSensitive: true,
-              },
-            },
-          },
-        ],
-      },
-    },
   };
 
   const data = await googleClient.run.runReport(request).then((data) => data);
@@ -60,4 +44,4 @@ async function getPageAggregateData(
   return processedData;
 }
 
-export default getPageAggregateData;
+export default getGlobalAggregateData;

@@ -4,9 +4,7 @@ import type { LiveData } from "../../types/data";
 import client from "./client";
 
 async function getLiveData(provider: GoogleProvider, options: LiveDataOptions) {
-  const googleClient = client(provider, {
-    endpoint: "/stats/realtime/visitors",
-  });
+  const googleClient = client(provider);
 
   const request = {
     property: `properties/${provider.propertyId}`,
@@ -22,9 +20,7 @@ async function getLiveData(provider: GoogleProvider, options: LiveDataOptions) {
 
   const data = await googleClient.run
     .runRealtimeReport(request)
-    .then((data) => data[0].rows?.[0].metricValues?.[0]?.value);
-
-  console.log("data rows", data);
+    .then((data) => data[0].rows?.[0]?.metricValues?.[0]?.value ?? null);
 
   const processedData: LiveData = {
     visitors: data ? parseInt(data) : 0,
