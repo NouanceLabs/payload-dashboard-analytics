@@ -8,6 +8,8 @@ import Media from "./collections/Media";
 import Homepage from "./globals/Homepage";
 import dashboardAnalytics from "../../dist/index";
 
+import { PlausibleProvider, GoogleProvider } from "../../dist/types/providers";
+
 const PLAUSIBLE_API_KEY = process.env.PLAUSIBLE_API_KEY;
 const PLAUSIBLE_HOST = process.env.PLAUSIBLE_HOST;
 const PLAUSIBLE_SITE_ID = process.env.PLAUSIBLE_SITE_ID;
@@ -15,14 +17,14 @@ const PLAUSIBLE_SITE_ID = process.env.PLAUSIBLE_SITE_ID;
 const GOOGLE_PROPERTY_ID = process.env.GOOGLE_PROPERTY_ID;
 const GOOGLE_CREDENTIALS_FILE = process.env.GOOGLE_CREDENTIALS_FILE;
 
-const plausibleProvider = {
+const plausibleProvider: PlausibleProvider = {
   source: "plausible",
   apiSecret: PLAUSIBLE_API_KEY,
   siteId: PLAUSIBLE_SITE_ID,
   host: PLAUSIBLE_HOST,
 };
 
-const googleProvider = {
+const googleProvider: GoogleProvider = {
   source: "google",
   //credentials: GOOGLE_CREDENTIALS_FILE,
   propertyId: GOOGLE_PROPERTY_ID,
