@@ -5,7 +5,7 @@ export interface PlausibleProvider {
   host?: string;
 }
 
-interface GoogleProvider {
+export interface GoogleProvider {
   source: "google";
   propertyId: string;
   credentials?: string;

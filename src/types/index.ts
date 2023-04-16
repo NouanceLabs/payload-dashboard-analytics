@@ -39,5 +39,3 @@ export type DashboardAnalyticsConfig = {
     afterDashboard?: DashboardWidgets[];
   };
 };
-
-export { PlausibleProvider, GoogleProvider };

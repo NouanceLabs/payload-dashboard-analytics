@@ -21,10 +21,13 @@ export type LiveData = {
   visitors: number;
 };
 
-export type ReportData = Array<{
+type ReportDataValue = { [value: string]: string | number };
+
+export type ReportData = {
   [label: string]: string;
-  values: Array<{ [value: string]: string | number }>;
-}>;
+  // @ts-expect-error
+  values: ReportDataValue[];
+}[];
 
 export type MetricsMap = Record<Metrics, { label: string; value: string }>;
 

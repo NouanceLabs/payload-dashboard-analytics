@@ -17,7 +17,7 @@ export type Properties =
   | "country";
 
 /* Keeping this for later */
-/* export type Reports = "topSources" | "topPages" | "topCountries"; */
+export type Reports = "topSources" | "topPages" | "topCountries";
 
 export interface ChartWidget {
   type: "chart";
