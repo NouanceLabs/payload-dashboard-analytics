@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node-terminal",
+      "name": "Run Script: dev",
+      "request": "launch",
+      "command": "cd demo && yarn run dev",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}
