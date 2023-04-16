@@ -250,9 +250,51 @@ Properties are used to generate reports, currently the widgets are limited in co
 
 ### Plausible
 
+We support Plausible's Stats API, more [information on their website](https://plausible.io/docs/stats-api).
+
+- **source** | "plausible" | required
+
+- **apiSecret** | string | required
+  You can generate an API secret in the admin panel of Plausible.
+
+- **siteId** | string | required
+
+- **host** | string | optional
+
+  Set this value to the full domain host including protocol if you're self hosting Plausible, eg. `https://plausible.example.com`
+
+Example
+
+```ts
+const plausibleProvider: PlausibleProvider = {
+  source: "plausible",
+  apiSecret: PLAUSIBLE_API_KEY,
+  siteId: PLAUSIBLE_SITE_ID,
+  host: PLAUSIBLE_HOST,
+};
+```
+
 ### Google Analytics
 
-tbd
+We support the GA4 Analytics API only. You will need to get a credentials file from [Google here](https://developers.google.com/analytics/devguides/reporting/data/v1/quickstart-client-libraries), and follow the initial setup instructions so that these credentials have the correct read access to your analytics data.
+
+- **source** | "google" | required
+
+- **propertyId** | string | required
+  The id of your target property, you can find this information in the GA property settings panel.
+
+- **credentials** | string | optional
+  Path to your credentials.json file, make sure the filesystem has access to this, alternatively, set an environment variable named `GOOGLE_APPLICATION_CREDENTIALS` with the path to the credentials file.
+
+Example
+
+```ts
+const googleProvider: GoogleProvider = {
+  source: "google",
+  credentials: GOOGLE_CREDENTIALS_FILE,
+  propertyId: GOOGLE_PROPERTY_ID,
+};
+```
 
 ## API
 
