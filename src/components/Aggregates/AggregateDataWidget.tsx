@@ -90,25 +90,30 @@ const AggregateDataWidget: React.FC<Props> = ({ options, metricsMap }) => {
         {isLoading ? (
           <>Loading...</>
         ) : (
-          <ul style={{ margin: "0", listStyle: "none", padding: "0" }}>
-            {data.map((item, index) => {
-              const value =
-                typeof item.value === "string"
-                  ? Math.floor(parseInt(item.value))
-                  : Math.floor(item.value);
-              return (
-                <li
-                  key={index}
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <div style={{ fontWeight: "700" }}>
-                    {metricsMap ? metricsMap[item.label].label : item.label}
-                  </div>
-                  <div>{value}</div>
-                </li>
-              );
-            })}
-          </ul>
+          data.length > 0 && (
+            <ul style={{ margin: "0", listStyle: "none", padding: "0" }}>
+              {data.map((item, index) => {
+                const value =
+                  typeof item.value === "string"
+                    ? Math.floor(parseInt(item.value))
+                    : Math.floor(item.value);
+
+                const itemLabel = item.label;
+
+                const label = metricsMap?.[itemLabel] ?? itemLabel;
+
+                return (
+                  <li
+                    key={index}
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <div style={{ fontWeight: "700" }}>{label}</div>
+                    <div>{value}</div>
+                  </li>
+                );
+              })}
+            </ul>
+          )
         )}
       </div>
     </section>
