@@ -25,7 +25,7 @@ const plausibleProvider: PlausibleProvider = {
 
 const googleProvider: GoogleProvider = {
   source: "google",
-  credentials: GOOGLE_CREDENTIALS_FILE,
+  //credentials: GOOGLE_CREDENTIALS_FILE,
   propertyId: GOOGLE_PROPERTY_ID,
 };
 

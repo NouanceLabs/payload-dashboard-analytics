@@ -7,7 +7,7 @@ type ClientOptions = {};
 
 function client(provider: GoogleProvider, options?: ClientOptions) {
   const analyticsDataClient = new BetaAnalyticsDataClient({
-    keyFilename: provider.credentials,
+    ...(provider.credentials ? { keyFilename: provider.credentials } : {}),
   });
 
   return {

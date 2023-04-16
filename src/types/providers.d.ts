@@ -7,6 +7,6 @@ export interface PlausibleProvider {
 
 interface GoogleProvider {
   source: "google";
-  credentials: string;
   propertyId: string;
+  credentials?: string;
 }
