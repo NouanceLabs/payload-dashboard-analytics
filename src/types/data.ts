@@ -21,13 +21,15 @@ export type LiveData = {
   visitors: number;
 };
 
-type ReportDataValue = { [value: string]: string | number };
-
-export type ReportData = {
+type ReportDataIndex = {
   [label: string]: string;
-  // @ts-expect-error
-  values: ReportDataValue[];
-}[];
+};
+
+type ReportDataValues = {
+  values: { [value: string]: string | number }[];
+};
+
+export type ReportData = (ReportDataIndex & ReportDataValues)[];
 
 export type MetricsMap = Record<Metrics, { label: string; value: string }>;
 
