@@ -31,6 +31,7 @@ payloadDashboardAnalytics({
     siteId: PLAUSIBLE_SITE_ID,
     host: PLAUSIBLE_HOST, // optional, for self-hosted instances
   },
+  cache: true,
   access: (user: any) => {
     return Boolean(user);
   },
@@ -93,6 +94,36 @@ payloadDashboardAnalytics({
   ```ts
   access: (user: any) => Boolean(user);
   ```
+
+- `cache` | optional
+
+  Accepts a boolean or a configuration object for cache management. **Defaults to false**.  
+  This creates a new collection type that will store cached data so that you don't get limited by the API.
+
+  ```ts
+  cache: true;
+  ```
+
+  - `slug` | optional
+
+    You can customise the slug of this new collection to avoid conflicts. Defaults to `analyticsData`.
+
+  - `routes` | optional
+
+    By default all routes are cached to one day. This is because for most analytics platforms the data report is about one day out anyway. Live data is cached to 5 minutes.
+
+    Object with any of these keys `globalAggregate` `globalChart` `pageAggregate` `pageChart` `report` `live` set to a number in minutes.
+
+    ```ts
+    routes?: {
+      globalAggregate: 1440;
+      globalChart: 1440;
+      pageAggregate: 1440;
+      pageChart: 1440;
+      report: 1440;
+      live: 5;
+    };
+    ```
 
 - `navigation` | optional
 
