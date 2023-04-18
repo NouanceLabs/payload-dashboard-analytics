@@ -24,9 +24,49 @@ const dashboardAnalytics =
   (incomingConfig: DashboardAnalyticsConfig) =>
   (config: PayloadConfig): PayloadConfig => {
     const { admin, collections, globals } = config;
-    const { provider, navigation, dashboard, access } = incomingConfig;
+    const { provider, navigation, dashboard, access, cache } = incomingConfig;
     const endpoints = config.endpoints ?? [];
     const apiProvider = getProvider(provider);
+
+    const cacheSlug =
+      typeof cache === "object"
+        ? cache?.slug ?? "analyticsData"
+        : "analyticsData";
+
+    const cacheCollection: CollectionConfig = {
+      slug: cacheSlug,
+      admin: {
+        defaultColumns: ["id", "cacheTimestamp", "cacheKey"],
+      },
+      access: {
+        read: () => true,
+        update: () => true,
+        create: () => true,
+        delete: () => true,
+      },
+      fields: [
+        {
+          type: "text",
+          name: "cacheKey",
+        },
+        {
+          type: "text",
+          name: "cacheTimestamp",
+        },
+        {
+          type: "json",
+          name: "data",
+        },
+      ],
+    };
+
+    const routeOptions = {
+      access: access,
+      cache: {
+        ...(typeof cache === "object" ? cache : {}),
+        slug: cacheSlug,
+      },
+    };
 
     const processedConfig: PayloadConfig = {
       ...config,
@@ -71,41 +111,45 @@ const dashboardAnalytics =
       },
       endpoints: [
         ...endpoints,
-        getGlobalAggregate(apiProvider, access),
-        getGlobalChart(apiProvider, access),
-        getPageChart(apiProvider, access),
-        getPageAggregate(apiProvider, access),
-        getLive(apiProvider, access),
-        getReport(apiProvider, access),
+        getGlobalAggregate(apiProvider, routeOptions),
+        getGlobalChart(apiProvider, routeOptions),
+        getPageChart(apiProvider, routeOptions),
+        getPageAggregate(apiProvider, routeOptions),
+        getLive(apiProvider, routeOptions),
+        getReport(apiProvider, routeOptions),
       ],
-      ...(collections && {
-        collections: collections.map((collection) => {
-          const targetCollection = incomingConfig.collections?.find(
-            (pluginCollection) => {
-              if (pluginCollection.slug === collection.slug) return true;
-              return false;
-            }
-          );
 
-          if (targetCollection) {
-            const collectionConfigWithHooks: CollectionConfig = {
-              ...collection,
-              fields: [
-                ...collection.fields,
-                ...targetCollection.widgets.map((widget, index) => {
-                  const field = PageWidgetMap[widget.type];
+      collections: [
+        ...(collections
+          ? collections.map((collection) => {
+              const targetCollection = incomingConfig.collections?.find(
+                (pluginCollection) => {
+                  if (pluginCollection.slug === collection.slug) return true;
+                  return false;
+                }
+              );
 
-                  return field(widget, index, apiProvider.metricsMap);
-                }),
-              ],
-            };
+              if (targetCollection) {
+                const collectionConfigWithHooks: CollectionConfig = {
+                  ...collection,
+                  fields: [
+                    ...collection.fields,
+                    ...targetCollection.widgets.map((widget, index) => {
+                      const field = PageWidgetMap[widget.type];
 
-            return collectionConfigWithHooks;
-          }
+                      return field(widget, index, apiProvider.metricsMap);
+                    }),
+                  ],
+                };
 
-          return collection;
-        }),
-      }),
+                return collectionConfigWithHooks;
+              }
+
+              return collection;
+            })
+          : []),
+        ...(cache ? [cacheCollection] : []),
+      ],
       ...(globals && {
         globals: globals.map((global) => {
           const targetGlobal = incomingConfig.globals?.find((pluginGlobal) => {

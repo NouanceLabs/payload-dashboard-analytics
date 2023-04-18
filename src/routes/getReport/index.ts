@@ -1,13 +1,13 @@
 import type { Endpoint } from "payload/config";
 import handler from "./handler";
 import type { ApiProvider } from "../../providers";
-import type { AccessControl } from "../../types";
+import type { RouteOptions } from "../../types";
 
-const getReport = (provider: ApiProvider, access?: AccessControl): Endpoint => {
+const getReport = (provider: ApiProvider, options: RouteOptions): Endpoint => {
   return {
     path: "/analytics/report",
     method: "post",
-    handler: handler(provider, access),
+    handler: handler(provider, options),
   };
 };
 

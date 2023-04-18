@@ -1,16 +1,16 @@
 import type { Endpoint } from "payload/config";
 import type { ApiProvider } from "../../providers";
-import type { AccessControl } from "../../types";
+import type { RouteOptions } from "../../types";
 import handler from "./handler";
 
 const getGlobalAggregate = (
   provider: ApiProvider,
-  access?: AccessControl
+  options: RouteOptions
 ): Endpoint => {
   return {
     path: "/analytics/globalAggregate",
     method: "post",
-    handler: handler(provider, access),
+    handler: handler(provider, options),
   };
 };
 

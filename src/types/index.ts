@@ -25,9 +25,27 @@ export type Provider = PlausibleProvider | GoogleProvider;
 
 export type AccessControl = (user: any) => boolean;
 
+export type CacheConfig = {
+  slug: string;
+  routes?: {
+    globalAggregate?: number;
+    globalChart?: number;
+    pageAggregate?: number;
+    pageChart?: number;
+    report?: number;
+    live?: number;
+  };
+};
+
+export type RouteOptions = {
+  access?: AccessControl;
+  cache?: CacheConfig;
+};
+
 export type DashboardAnalyticsConfig = {
   provider: Provider;
   access?: AccessControl;
+  cache?: boolean | CacheConfig;
   collections?: Collection[];
   globals?: Global[];
   navigation?: {

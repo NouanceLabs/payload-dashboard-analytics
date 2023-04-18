@@ -66,6 +66,9 @@ export default buildConfig({
       access: (user: any) => {
         return Boolean(user);
       },
+      cache: {
+        slug: "dashboardAnalytics",
+      },
       navigation: {
         afterNavLinks: [
           {
