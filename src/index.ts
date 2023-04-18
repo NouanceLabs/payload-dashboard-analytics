@@ -39,10 +39,10 @@ const dashboardAnalytics =
         defaultColumns: ["id", "cacheTimestamp", "cacheKey"],
       },
       access: {
-        read: () => true,
-        update: () => true,
-        create: () => true,
-        delete: () => true,
+        read: () => false,
+        update: () => false,
+        create: () => false,
+        delete: () => false,
       },
       fields: [
         {
