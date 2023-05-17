@@ -4250,9 +4250,9 @@ pause@0.0.1:
   integrity sha512-KG8UEiEVkR3wGEb4m5yZkVCzigAD+cVEJck2CzYZO37ZGJfctvVptVO192MwrtPhzONn6go8ylnOdMhKqi4nfg==
 
 payload@^1.6.26:
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/payload/-/payload-1.7.2.tgz#22aeb42871b1f09279382db9731724c697f44460"
-  integrity sha512-577DgrstocvKlnBo5ZgXEoH65qtoxP7HozgpgsFqAAgxCxudJ1zlnAAvce5usFxYdkOg6Yj1ezkq2ttLJeZbxA==
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/payload/-/payload-1.8.2.tgz#94edff09f1580aa6dc28b41210244229303e1435"
+  integrity sha512-Bk7nDGdaQAhMIX7J9S+FkbLoZ+PNVrmwAg84RAj9Q7JyBeHHmJyDSTaGVenzXjWpch5bbMEd9nNdezpSalmZeg==
   dependencies:
     "@date-io/date-fns" "^2.16.0"
     "@dnd-kit/core" "^6.0.7"
@@ -4352,7 +4352,7 @@ payload@^1.6.26:
     slate-react "^0.92.0"
     style-loader "^2.0.0"
     swc-loader "^0.2.3"
-    swc-minify-webpack-plugin "^1.0.1"
+    swc-minify-webpack-plugin "^2.1.0"
     terser-webpack-plugin "^5.3.6"
     ts-essentials "^7.0.3"
     url-loader "^4.1.1"
@@ -5924,10 +5924,10 @@ swc-loader@^0.2.3:
   resolved "https://registry.yarnpkg.com/swc-loader/-/swc-loader-0.2.3.tgz#6792f1c2e4c9ae9bf9b933b3e010210e270c186d"
   integrity sha512-D1p6XXURfSPleZZA/Lipb3A8pZ17fP4NObZvFCDjK/OKljroqDpPmsBdTraWhVBqUNpcWBQY1imWdoPScRlQ7A==
 
-swc-minify-webpack-plugin@^1.0.1:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/swc-minify-webpack-plugin/-/swc-minify-webpack-plugin-1.1.2.tgz#4b8c97b005ab2bf1e993f9a0d38903227cc198d8"
-  integrity sha512-4GP6FlHsGZ8fA23OfEwSrGHOsAgYed/mCWlQmom7ocdd2AhHJsGNkHXsctjsKVfREIPcOdjZmim4ljkigz3EMw==
+swc-minify-webpack-plugin@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/swc-minify-webpack-plugin/-/swc-minify-webpack-plugin-2.1.0.tgz#35f975595d2e090064f34cb57f4ac4fd98a67eaa"
+  integrity sha512-v4B+Wcr84q58w2uALmjdTmOKyoF0pWY1xoGzy5vMibuQXQ0dHXlTmhodfu1NCiOISkqMf3T10nFmFQutBLw/vA==
 
 tabbable@^5.3.3:
   version "5.3.3"
