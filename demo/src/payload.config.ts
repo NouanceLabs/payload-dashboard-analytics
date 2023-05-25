@@ -6,9 +6,9 @@ import Tags from "./collections/Tags";
 import Users from "./collections/Users";
 import Media from "./collections/Media";
 import Homepage from "./globals/Homepage";
-import dashboardAnalytics from "../../dist/index";
+import dashboardAnalytics from "../../src/index";
 
-import { PlausibleProvider, GoogleProvider } from "../../dist/types/providers";
+import { PlausibleProvider, GoogleProvider } from "../../src/types/providers";
 
 const PLAUSIBLE_API_KEY = process.env.PLAUSIBLE_API_KEY;
 const PLAUSIBLE_HOST = process.env.PLAUSIBLE_HOST;

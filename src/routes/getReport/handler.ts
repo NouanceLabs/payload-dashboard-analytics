@@ -84,8 +84,8 @@ const handler = (provider: ApiProvider, options: RouteOptions) => {
         if (cachedData) {
           if (
             differenceInMinutes(
-              Date.parse(cachedData.cacheTimestamp),
-              timeNow
+              timeNow,
+              Date.parse(cachedData.cacheTimestamp)
             ) > cacheLifetime
           ) {
             const data = await provider
