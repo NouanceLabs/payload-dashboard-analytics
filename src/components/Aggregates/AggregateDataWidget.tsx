@@ -99,7 +99,7 @@ const AggregateDataWidget: React.FC<Props> = ({ options, metricsMap }) => {
 
               const itemLabel = item.label;
 
-              const label = metricsMap?.[itemLabel] ?? itemLabel;
+              const label = metricsMap?.[itemLabel]?.label ?? itemLabel;
 
               return (
                 <li
