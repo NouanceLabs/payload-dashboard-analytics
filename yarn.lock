@@ -5295,9 +5295,9 @@ react-animate-height@^2.1.2:
     prop-types "^15.6.1"
 
 react-charts@^3.0.0-beta.54:
-  version "3.0.0-beta.54"
-  resolved "https://registry.yarnpkg.com/react-charts/-/react-charts-3.0.0-beta.54.tgz#8d89f345b789b7fa5f87be8dbc6ad4999d5129a2"
-  integrity sha512-Q5IvY4sXMxdJLLNnRXWnr/TD/c3p/dBRAQTi+nINvIsn2aLUyc81W9KTp6N2MTpkB4zU3594QC1yPeEK91bklg==
+  version "3.0.0-beta.55"
+  resolved "https://registry.yarnpkg.com/react-charts/-/react-charts-3.0.0-beta.55.tgz#07b91432f18bd739030cb742bcde915a62760633"
+  integrity sha512-PuPGoK/3B4SgmnANqh1+biuJAN/iYAvLO/juLKJ2dtF0+Wzfa0KarGbgAij2o8P83bAn9bZnu46RCevNvYwOjQ==
   dependencies:
     "@babel/runtime" "^7.14.6"
     "@types/d3-array" "^3.0.1"
