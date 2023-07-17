@@ -2740,11 +2740,6 @@ gcp-metadata@^5.2.0:
     gaxios "^5.0.0"
     json-bigint "^1.0.0"
 
-generaterr@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/generaterr/-/generaterr-1.5.0.tgz#b0ceb6cc5164df2a061338cc340a8615395c52fc"
-  integrity sha512-JgcGRv2yUKeboLvvNrq9Bm90P4iJBu7/vd5wSLYqMG5GJ6SxZT46LAAkMfNhQ+EK3jzC+cRBm7P8aUWYyphgcQ==
-
 get-caller-file@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-2.0.5.tgz#4f94412a82db32f36e3b0b9741f8a97feb031f7e"
@@ -4310,15 +4305,6 @@ passport-jwt@^4.0.1:
     jsonwebtoken "^9.0.0"
     passport-strategy "^1.0.0"
 
-passport-local-mongoose@^7.1.2:
-  version "7.1.2"
-  resolved "https://registry.yarnpkg.com/passport-local-mongoose/-/passport-local-mongoose-7.1.2.tgz#0a89876ef8a8e18787e59a39740e61c5653eb25e"
-  integrity sha512-hNLIKi/6IhElr/PhOze8wLDh7T4+ZYhc8GFWYApLgG7FrjI55tuGZELPtsUBqODz77OwlUUf+ngPgHN09zxGLg==
-  dependencies:
-    generaterr "^1.5.0"
-    passport-local "^1.0.0"
-    scmp "^2.1.0"
-
 passport-local@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/passport-local/-/passport-local-1.0.0.tgz#1fe63268c92e75606626437e3b906662c15ba6ee"
@@ -4393,9 +4379,9 @@ pause@0.0.1:
   integrity sha512-KG8UEiEVkR3wGEb4m5yZkVCzigAD+cVEJck2CzYZO37ZGJfctvVptVO192MwrtPhzONn6go8ylnOdMhKqi4nfg==
 
 payload@^1.6.26:
-  version "1.8.5"
-  resolved "https://registry.yarnpkg.com/payload/-/payload-1.8.5.tgz#e42cd4c3d138ac2f1cccb91f711f8424e0308c93"
-  integrity sha512-ruiwe1h0+0ZXRdk3gC2YFx9+1/EXCMe/q9+xaAeXJCAEibf3iRwaaz/JEoWa2ZH8tGIZWrBtP++Sh9+lPeYyuA==
+  version "1.11.2"
+  resolved "https://registry.yarnpkg.com/payload/-/payload-1.11.2.tgz#8f9209058f2fbdc077462ba9750d2512621a6b06"
+  integrity sha512-x2eYZvecr76fWoYdj+CMUGFKP/nmGz+KZETnu9drQrcnYZ9BAQgs+AGj3GVXmtrhvmLMdtYYlN07kiJwjN3rGw==
   dependencies:
     "@date-io/date-fns" "^2.16.0"
     "@dnd-kit/core" "^6.0.7"
@@ -4463,7 +4449,6 @@ payload@^1.6.26:
     passport-headerapikey "^1.2.2"
     passport-jwt "^4.0.1"
     passport-local "^1.0.0"
-    passport-local-mongoose "^7.1.2"
     path-browserify "^1.0.1"
     pino "^6.4.1"
     pino-pretty "^9.1.1"
@@ -4490,6 +4475,7 @@ payload@^1.6.26:
     sass "^1.57.1"
     sass-loader "^12.6.0"
     scheduler "^0.23.0"
+    scmp "^2.1.0"
     sharp "^0.31.3"
     slate "^0.91.4"
     slate-history "^0.86.0"
