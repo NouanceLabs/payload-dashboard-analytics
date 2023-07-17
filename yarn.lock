@@ -352,9 +352,9 @@
     "@floating-ui/core" "^1.2.6"
 
 "@google-analytics/data@^3.2.2":
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/@google-analytics/data/-/data-3.2.2.tgz#6f2a0fe131130d331d4d6011230b9335d71c99c5"
-  integrity sha512-6miRi6o22onmGfZvbPfqtVJ6vkN/l6utC5Mh/it3YjBk48olS+PEppdNJfJLk5mKHM46UaONi/97++rPWB9DVQ==
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@google-analytics/data/-/data-3.3.0.tgz#ef256d61df20e92372168a34f301271518667f64"
+  integrity sha512-412ZiBapy+79KsrkiD8lx/esEXq26VM+bjGeiMQ+O+3g8jBmpPANX8KY7huXghGCpUAiSv+Iez5rogp56IqDfQ==
   dependencies:
     google-gax "^3.5.8"
 
