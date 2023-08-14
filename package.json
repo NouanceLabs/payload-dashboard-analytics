@@ -41,7 +41,7 @@
     "types.d.ts"
   ],
   "dependencies": {
-    "@google-analytics/data": "^3.2.2",
+    "@google-analytics/data": "^4.0.0",
     "react-charts": "^3.0.0-beta.54"
   }
 }
